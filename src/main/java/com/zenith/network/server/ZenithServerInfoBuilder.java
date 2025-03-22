@@ -60,12 +60,12 @@ public class ZenithServerInfoBuilder {
     }
 
     private String getSessionCacheKey(@Nullable Session session) {
-        if (session != null && CONFIG.server.viaversion.enabled) { // our response has a different protocol version for each connection (mirroring them)
-            String ip = session.getRemoteAddress().toString();
-            if (ip.contains("/")) ip = ip.substring(ip.indexOf("/") + 1);
-            if (ip.contains(":")) ip = ip.substring(0, ip.indexOf(":"));
-            return ip;
-        }
+//        if (session != null && CONFIG.server.viaversion.enabled) { // our response has a different protocol version for each connection (mirroring them)
+//            String ip = session.getRemoteAddress().toString();
+//            if (ip.contains("/")) ip = ip.substring(ip.indexOf("/") + 1);
+//            if (ip.contains(":")) ip = ip.substring(0, ip.indexOf(":"));
+//            return ip;
+//        }
         return "";
     }
 
@@ -80,9 +80,11 @@ public class ZenithServerInfoBuilder {
     }
 
     private VersionInfo getVersionInfo(@Nullable Session session) {
-        int protocolId = CONFIG.server.viaversion.enabled && session instanceof ServerSession
-            ? ((ServerSession) session).getProtocolVersionId()
-            : MinecraftCodec.CODEC.getProtocolVersion();
+        int protocolId =
+//                CONFIG.server.viaversion.enabled && session instanceof ServerSession
+//            ? ((ServerSession) session).getProtocolVersionId()
+//            :
+                        MinecraftCodec.CODEC.getProtocolVersion();
         return new VersionInfo("ZenithProxy", protocolId);
     }
 

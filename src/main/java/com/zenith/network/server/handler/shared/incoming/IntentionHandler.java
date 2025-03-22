@@ -93,8 +93,8 @@ public class IntentionHandler implements PacketHandler<ClientIntentionPacket, Se
     }
 
     private void updateSessionMCVersion(ServerSession session, ClientIntentionPacket packet) {
-        if (CONFIG.server.viaversion.enabled ) {
-            throw new RuntimeException("ViaVersion is not supported in this version");
+//        if (CONFIG.server.viaversion.enabled ) {
+//            throw new RuntimeException("ViaVersion is not supported in this version");
 //                && session.getChannel().hasAttr(ZenithViaInitializer.VIA_USER)) {
 //            var userConnection = session.getChannel().attr(ZenithViaInitializer.VIA_USER).get();
 //            var protocolVersion = userConnection.getProtocolInfo().protocolVersion();
@@ -102,7 +102,7 @@ public class IntentionHandler implements PacketHandler<ClientIntentionPacket, Se
 //                session.setProtocolVersionId(protocolVersion.getVersion());
 //                return;
 //            }
-        }
+//        }
         session.setProtocolVersionId(packet.getProtocolVersion());
     }
 }

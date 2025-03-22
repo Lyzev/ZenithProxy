@@ -468,7 +468,7 @@ public final class Config {
         public boolean enabled = true;
         public final Extra extra = new Extra();
         public final Ping ping = new Ping();
-        public final ServerViaVersion viaversion = new ServerViaVersion();
+//        public final ServerViaVersion viaversion = new ServerViaVersion();
         public boolean verifyUsers = true;
         public boolean enforceMatchingConnectingAddress = false;
         public boolean acceptTransfers = true;
@@ -563,10 +563,10 @@ public final class Config {
             public boolean logPings = true;
         }
 
-        public static final class ServerViaVersion {
-            public boolean enabled = true;
-            public boolean autoRemoveFromPipeline = true;
-        }
+//        public static final class ServerViaVersion {
+//            public boolean enabled = true;
+//            public boolean autoRemoveFromPipeline = true;
+//        }
 
         public String getProxyAddress() {
             // if the proxy IP is not a DNS name, also return the port appended

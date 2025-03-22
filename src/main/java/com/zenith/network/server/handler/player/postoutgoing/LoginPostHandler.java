@@ -22,7 +22,7 @@ public class LoginPostHandler implements PostOutgoingPacketHandler<ClientboundLo
         }
         if (session.isLoggedIn())
             return; // servers can send multiple login packets during world or skin switches
-        checkDisableServerVia(session);
+//        checkDisableServerVia(session);
         session.setLoggedIn(); // allows server packets to start being sent to player
         EVENT_BUS.postAsync(new ProxyClientLoggedInEvent(session));
         DataCache.sendCacheData(CACHE.getAllData(), session);
@@ -55,9 +55,9 @@ public class LoginPostHandler implements PostOutgoingPacketHandler<ClientboundLo
         }
     }
 
-    private void checkDisableServerVia(ServerSession session) {
-        if (CONFIG.server.viaversion.enabled && CONFIG.server.viaversion.autoRemoveFromPipeline) {
-            throw new RuntimeException("ViaVersion is not supported in this version");
+//    private void checkDisableServerVia(ServerSession session) {
+//        if (CONFIG.server.viaversion.enabled && CONFIG.server.viaversion.autoRemoveFromPipeline) {
+//            throw new RuntimeException("ViaVersion is not supported in this version");
 //            var channel = session.getChannel();
 //            if (session.getProtocolVersion().getVersion() == MinecraftCodec.CODEC.getProtocolVersion()
 //                && channel.hasAttr(ZenithViaInitializer.VIA_USER)
@@ -74,6 +74,6 @@ public class LoginPostHandler implements PostOutgoingPacketHandler<ClientboundLo
 //                    SERVER_LOG.error("Error disabling ViaVersion for player: {}", session.getProfileCache().getProfile().getName(), e);
 //                }
 //            }
-        }
-    }
+//        }
+//    }
 }
