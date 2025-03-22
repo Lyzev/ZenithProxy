@@ -1,3 +1,41 @@
+# Fork
+
+This is a fork of ZenithProxy, a Minecraft proxy and bot designed for 2b2t.org but also works on any server. This fork is intended to be used for 2b2t.org
+
+Note: I will not provide any support for this fork, as it is a personal project. If you have any questions or issues, please refer to the original repository.
+
+## Why this fork?
+
+I needed an optimized version of ZenithProxy since I am running it on a very cheap and low-end VPS. I removed all the unnecessary code and dependencies, and I also added Docker files to make it easier to run the proxy in a container.
+
+I was able to reduce the memory usage of the proxy to about **65mb (~50% reduction)**.
+
+## Changes
+
+- I removed all ViaVersion code, as it is not needed for 2b2t.org
+- I removed all Update/Version checking code, as it is not needed in my opinion.
+- I added Docker files to make it easier to run the proxy in a container. (See the `docker-graalvm` directory)
+
+## Running the proxy
+
+Download the GraalVM build from the `Build Linux` action, and put `ZenithProxy` binary file in the `docker-graalvm/build/native/nativeCompile` directory.
+
+Then, run the following command to build the Docker image:
+
+```bash
+docker build -t zenithproxy .
+docker image save zenithproxy -o zenithproxy.tar
+```
+
+Then, copy the `zenithproxy.tar` file to the server where you want to run the proxy, and run the following command:
+
+```shell
+docker load -i zenithproxy.tar
+```
+
+Now you can use the docker image to run the proxy! Note it is recommended to use a preconfigured `config.json` file, as the docker image's terminal is not working properly.
+With a preconfigured `config.json` file, you can use Discord commands to manage the proxy.
+
 # ZenithProxy
 
 <p align="center">
