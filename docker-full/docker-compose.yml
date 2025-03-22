@@ -1,0 +1,14 @@
+services:
+  zenith-proxy:
+    build: ./
+    container_name: zenith-proxy
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    ports:
+      - "25565:25565/tcp"
+    volumes:
+      - zenith-config:/app
+
+volumes:
+  zenith-config:
