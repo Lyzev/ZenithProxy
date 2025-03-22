@@ -47,9 +47,10 @@ jobs:
           name: ZenithProxy-java
           path: build/libs/ZenithProxy.jar
 
-      - name: Enable GraalVM Profile Instrumenting
+      - name: Download GraalVM Profile
         run: |
-          echo "GRAALVM_PGO_INSTRUMENT=true" >> "$GITHUB_ENV"
+          wget https://cdn.2b2t.vc/profile.iprof
+          echo "GRAALVM_PGO_PATH=$(pwd)/profile.iprof" >> "$GITHUB_ENV"
 
       - name: Build ZenithProxy Linux Native
         run: ./gradlew nativeCompile
