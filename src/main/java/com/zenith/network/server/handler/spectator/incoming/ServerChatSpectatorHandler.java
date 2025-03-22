@@ -1,7 +1,5 @@
 package com.zenith.network.server.handler.spectator.incoming;
 
-import com.viaversion.viaversion.api.Via;
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.zenith.Proxy;
 import com.zenith.cache.data.entity.Entity;
 import com.zenith.event.proxy.PrivateMessageSendEvent;
@@ -15,8 +13,6 @@ import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.Clientbound
 import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.ClientboundSystemChatPacket;
 import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.entity.ClientboundRemoveEntitiesPacket;
 import org.geysermc.mcprotocollib.protocol.packet.ingame.serverbound.ServerboundChatPacket;
-
-import java.util.Optional;
 
 import static com.zenith.Shared.*;
 
@@ -126,14 +122,15 @@ public class ServerChatSpectatorHandler implements PacketHandler<ServerboundChat
                     return;
                 }
                 if (CONFIG.server.viaversion.enabled) {
-                    Optional<ProtocolVersion> viaClientProtocolVersion = Via.getManager().getConnectionManager().getConnectedClients().values().stream()
-                        .filter(client -> client.getChannel() == session.getChannel())
-                        .map(con -> con.getProtocolInfo().protocolVersion())
-                        .findFirst();
-                    if (viaClientProtocolVersion.isPresent() && viaClientProtocolVersion.get().olderThan(ProtocolVersion.v1_20_5)) {
-                        session.send(new ClientboundSystemChatPacket(ComponentSerializer.minimessage("<red>Unsupported Client MC Version"), false));
-                        return;
-                    }
+                    throw new RuntimeException("ViaVersion is not supported in this version");
+//                    Optional<ProtocolVersion> viaClientProtocolVersion = Via.getManager().getConnectionManager().getConnectedClients().values().stream()
+//                        .filter(client -> client.getChannel() == session.getChannel())
+//                        .map(con -> con.getProtocolInfo().protocolVersion())
+//                        .findFirst();
+//                    if (viaClientProtocolVersion.isPresent() && viaClientProtocolVersion.get().olderThan(ProtocolVersion.v1_20_5)) {
+//                        session.send(new ClientboundSystemChatPacket(ComponentSerializer.minimessage("<red>Unsupported Client MC Version"), false));
+//                        return;
+//                    }
                 }
                 session.transferToControllingPlayer(CONFIG.server.getProxyAddressForTransfer(), CONFIG.server.getProxyPortForTransfer());
             }

@@ -1,6 +1,5 @@
 package com.zenith.network.server;
 
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.zenith.Proxy;
 import com.zenith.cache.data.PlayerCache;
 import com.zenith.cache.data.ServerProfileCache;
@@ -372,15 +371,15 @@ public class ServerSession extends TcpServerSession {
     }
 
     public String getMCVersion() {
-        return ProtocolVersion.getProtocol(protocolVersionId).getName();
+        return String.valueOf(protocolVersionId); // ProtocolVersion.getProtocol(protocolVersionId).getName();
     }
 
-    public ProtocolVersion getProtocolVersion() {
-        return ProtocolVersion.getProtocol(protocolVersionId);
-    }
+//    public ProtocolVersion getProtocolVersion() {
+//        return ProtocolVersion.getProtocol(protocolVersionId);
+//    }
 
     public boolean canTransfer() {
-        return getProtocolVersion().newerThanOrEqualTo(ProtocolVersion.v1_20_5);
+        return true; // getProtocolVersion().newerThanOrEqualTo(ProtocolVersion.v1_20_5);
     }
 
     public void transfer(final String address, final int port) {

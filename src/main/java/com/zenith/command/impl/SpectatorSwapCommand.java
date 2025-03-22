@@ -1,7 +1,6 @@
 package com.zenith.command.impl;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.zenith.Proxy;
 import com.zenith.command.Command;
 import com.zenith.command.CommandUsage;
@@ -54,11 +53,15 @@ public class SpectatorSwapCommand extends Command {
                     .description("No player is currently controlling the proxy account");
                 return;
             }
-            if (player.getProtocolVersion().olderThan(ProtocolVersion.v1_20_5)) {
+            if (true) { // player.getProtocolVersion().olderThan(ProtocolVersion.v1_20_5)
                 c.getSource().getEmbed()
                     .title("Unsupported Client MC Version")
                     .errorColor()
-                    .addField("Client Version", player.getProtocolVersion().getName(), false)
+                    .addField(
+                            "Client Version",
+                            player.getProtocolVersionId(), // player.getProtocolVersion().getName()
+                            false
+                    )
                     .addField("Error", "Client version must be at least 1.20.6", false);
                 return;
             }
@@ -72,13 +75,13 @@ public class SpectatorSwapCommand extends Command {
                 session.send(new ClientboundSystemChatPacket(ComponentSerializer.minimessage("<red>You are not whitelisted!"), false));
                 return;
             }
-            if (session.getProtocolVersion().olderThan(ProtocolVersion.v1_20_5)) {
+            if (true) { // session.getProtocolVersion().olderThan(ProtocolVersion.v1_20_5)
                 session.send(new ClientboundSystemChatPacket(ComponentSerializer.minimessage("<red>Unsupported Client MC Version"), false));
                 return;
             }
             if (activePlayer != null) {
                 if (force) {
-                    if (activePlayer.getProtocolVersion().olderThan(ProtocolVersion.v1_20_5)) {
+                    if (true) { // activePlayer.getProtocolVersion().olderThan(ProtocolVersion.v1_20_5)
                         session.send(new ClientboundSystemChatPacket(ComponentSerializer.minimessage("<red>Controlling player is using an unsupported Client MC Version"), false));
                         return;
                     }

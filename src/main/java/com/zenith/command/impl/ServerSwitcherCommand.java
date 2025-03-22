@@ -1,7 +1,6 @@
 package com.zenith.command.impl;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.zenith.Proxy;
 import com.zenith.command.Command;
 import com.zenith.command.CommandUsage;
@@ -82,11 +81,15 @@ public class ServerSwitcherCommand extends Command {
                         .title("No player connected to transfer");
                     return OK;
                 }
-                if (currentPlayer.getProtocolVersion().olderThan(ProtocolVersion.v1_20_5)) {
+                if (true) { // currentPlayer.getProtocolVersion().olderThan(ProtocolVersion.v1_20_5)
                     c.getSource().getEmbed()
                         .title("Unsupported Client MC Version")
                         .errorColor()
-                        .addField("Client Version", currentPlayer.getProtocolVersion().getName(), false)
+                        .addField(
+                                "Client Version",
+                                currentPlayer.getProtocolVersionId(), // currentPlayer.getProtocolVersion().getName()
+                                false
+                        )
                         .addField("Error", "Client version must be at least 1.20.6", false);
                     return OK;
                 }

@@ -28,7 +28,6 @@ import com.zenith.util.Config;
 import com.zenith.util.ConfigVerifier;
 import com.zenith.util.LaunchConfig;
 import com.zenith.util.Wait;
-import com.zenith.via.ZenithViaInitializer;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,7 +81,7 @@ public class Shared {
     public static final InGameCommandManager IN_GAME_COMMAND;
     public static final CommandManager COMMAND;
     public static final PlayerInventoryManager INVENTORY;
-    public static final ZenithViaInitializer VIA_INITIALIZER;
+//    public static final ZenithViaInitializer VIA_INITIALIZER;
     public static synchronized Config loadConfig() {
         try {
             DEFAULT_LOG.info("Loading config...");
@@ -231,7 +230,7 @@ public class Shared {
             IN_GAME_COMMAND = new InGameCommandManager();
             COMMAND = new CommandManager();
             INVENTORY = new PlayerInventoryManager();
-            VIA_INITIALIZER = new ZenithViaInitializer();
+//            VIA_INITIALIZER = new ZenithViaInitializer();
             TranslationRegistryInitializer.registerAllTranslations();
             CONFIG = loadConfig();
             LAUNCH_CONFIG = loadLaunchConfig();

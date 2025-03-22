@@ -6,7 +6,6 @@ import com.zenith.command.brigadier.CommandContext;
 import com.zenith.command.brigadier.DiscordCommandContext;
 import com.zenith.command.util.CommandOutputHelper;
 import com.zenith.event.proxy.DiscordMessageSentEvent;
-import com.zenith.feature.autoupdater.AutoUpdater;
 import com.zenith.feature.queue.Queue;
 import com.zenith.module.impl.AutoReconnect;
 import com.zenith.util.MentionUtil;
@@ -43,7 +42,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -233,18 +231,18 @@ public class DiscordBot {
     void updatePresence() {
         if (!isRunning) return;
         try {
-            if (LAUNCH_CONFIG.auto_update) {
-                final AutoUpdater autoUpdater = Proxy.getInstance().getAutoUpdater();
-                if (autoUpdater.getUpdateAvailable()
-                    && ThreadLocalRandom.current().nextDouble() < 0.25
-                ) {
-                    jda.getPresence().setPresence(
-                            OnlineStatus.ONLINE,
-                            Activity.customStatus("Update Available" + autoUpdater.getNewVersion().map(v -> ": " + v).orElse(""))
-                    );
-                    return;
-                }
-            }
+//            if (LAUNCH_CONFIG.auto_update) {
+//                final AutoUpdater autoUpdater = Proxy.getInstance().getAutoUpdater();
+//                if (autoUpdater.getUpdateAvailable()
+//                    && ThreadLocalRandom.current().nextDouble() < 0.25
+//                ) {
+//                    jda.getPresence().setPresence(
+//                            OnlineStatus.ONLINE,
+//                            Activity.customStatus("Update Available" + autoUpdater.getNewVersion().map(v -> ": " + v).orElse(""))
+//                    );
+//                    return;
+//                }
+//            }
             if (MODULE.get(AutoReconnect.class).autoReconnectIsInProgress()) {
                 jda.getPresence().setPresence(OnlineStatus.IDLE, Activity.customStatus("AutoReconnecting..."));
                 return;

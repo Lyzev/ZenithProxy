@@ -3,7 +3,6 @@ package com.zenith.network.server.handler.shared.incoming;
 import com.zenith.feature.ratelimiter.RateLimiter;
 import com.zenith.network.registry.PacketHandler;
 import com.zenith.network.server.ServerSession;
-import com.zenith.via.ZenithViaInitializer;
 import org.geysermc.mcprotocollib.protocol.MinecraftProtocol;
 import org.geysermc.mcprotocollib.protocol.data.ProtocolState;
 import org.geysermc.mcprotocollib.protocol.data.handshake.HandshakeIntent;
@@ -97,13 +96,15 @@ public class IntentionHandler implements PacketHandler<ClientIntentionPacket, Se
     }
 
     private void updateSessionMCVersion(ServerSession session, ClientIntentionPacket packet) {
-        if (CONFIG.server.viaversion.enabled && session.getChannel().hasAttr(ZenithViaInitializer.VIA_USER)) {
-            var userConnection = session.getChannel().attr(ZenithViaInitializer.VIA_USER).get();
-            var protocolVersion = userConnection.getProtocolInfo().protocolVersion();
-            if (protocolVersion != null) {
-                session.setProtocolVersionId(protocolVersion.getVersion());
-                return;
-            }
+        if (CONFIG.server.viaversion.enabled ) {
+            throw new RuntimeException("ViaVersion is not supported in this version");
+//                && session.getChannel().hasAttr(ZenithViaInitializer.VIA_USER)) {
+//            var userConnection = session.getChannel().attr(ZenithViaInitializer.VIA_USER).get();
+//            var protocolVersion = userConnection.getProtocolInfo().protocolVersion();
+//            if (protocolVersion != null) {
+//                session.setProtocolVersionId(protocolVersion.getVersion());
+//                return;
+//            }
         }
         session.setProtocolVersionId(packet.getProtocolVersion());
     }

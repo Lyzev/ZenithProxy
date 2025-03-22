@@ -8,9 +8,6 @@ import com.zenith.event.proxy.*;
 import com.zenith.feature.api.crafthead.CraftheadApi;
 import com.zenith.feature.api.mcsrvstatus.MCSrvStatusApi;
 import com.zenith.feature.api.minotar.MinotarApi;
-import com.zenith.feature.autoupdater.AutoUpdater;
-import com.zenith.feature.autoupdater.NoOpAutoUpdater;
-import com.zenith.feature.autoupdater.RestAutoUpdater;
 import com.zenith.feature.queue.Queue;
 import com.zenith.module.impl.AutoReconnect;
 import com.zenith.network.client.Authenticator;
@@ -86,7 +83,7 @@ public class Proxy {
     private OptionalLong prevOnlineSeconds = OptionalLong.empty();
     private Optional<Boolean> isPrio = Optional.empty();
     @Getter private final AtomicBoolean loggingIn = new AtomicBoolean(false);
-    @Setter @NonNull private AutoUpdater autoUpdater = NoOpAutoUpdater.INSTANCE;
+//    @Setter @NonNull private AutoUpdater autoUpdater = NoOpAutoUpdater.INSTANCE;
     private LanBroadcaster lanBroadcaster;
     private TcpConnectionManager tcpManager;
 
@@ -155,7 +152,7 @@ public class Proxy {
             saveConfigAsync();
             MinecraftConstants.CHUNK_SECTION_COUNT_PROVIDER = CACHE.getSectionCountProvider();
             if (CONFIG.client.viaversion.enabled || CONFIG.server.viaversion.enabled) {
-                VIA_INITIALIZER.init();
+//                VIA_INITIALIZER.init();
             }
             startServer();
             CACHE.reset(CacheResetType.FULL);
@@ -178,13 +175,13 @@ public class Proxy {
                     connected = true;
                 }
             }
-            if (LAUNCH_CONFIG.auto_update && System.getenv("ZENITH_DEV") == null) {
-                autoUpdater = LAUNCH_CONFIG.release_channel.equals("git")
-                    ? NoOpAutoUpdater.INSTANCE
-                    : new RestAutoUpdater();
-                autoUpdater.start();
-                DEFAULT_LOG.info("Started AutoUpdater");
-            }
+//            if (LAUNCH_CONFIG.auto_update && System.getenv("ZENITH_DEV") == null) {
+//                autoUpdater = LAUNCH_CONFIG.release_channel.equals("git")
+//                    ? NoOpAutoUpdater.INSTANCE
+//                    : new RestAutoUpdater();
+//                autoUpdater.start();
+//                DEFAULT_LOG.info("Started AutoUpdater");
+//            }
             DEFAULT_LOG.info("ZenithProxy started!");
             if (LAUNCH_CONFIG.release_channel.endsWith(".pre")) {
                 DISCORD.sendEmbedMessage(

@@ -5,7 +5,7 @@
     </envs>
     <option name="MAIN_CLASS_NAME" value="com.zenith.Proxy" />
     <module name="ZenithProxy.main" />
-    <option name="VM_PARAMETERS" value="-Xmx300m -XX:+UseG1GC" />
+    <option name="VM_PARAMETERS" value="-Xmx100m -XX:+UseZGC" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
     <method v="2">
       <option name="Make" enabled="true" />

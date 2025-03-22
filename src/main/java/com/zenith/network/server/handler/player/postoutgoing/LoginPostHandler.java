@@ -1,15 +1,11 @@
 package com.zenith.network.server.handler.player.postoutgoing;
 
-import com.viaversion.viaversion.api.Via;
 import com.zenith.Proxy;
 import com.zenith.cache.DataCache;
 import com.zenith.event.proxy.ProxyClientLoggedInEvent;
 import com.zenith.network.registry.PostOutgoingPacketHandler;
 import com.zenith.network.server.ServerSession;
 import com.zenith.util.ComponentSerializer;
-import com.zenith.via.ZenithViaInitializer;
-import net.raphimc.vialoader.netty.VLPipeline;
-import org.geysermc.mcprotocollib.protocol.codec.MinecraftCodec;
 import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.ClientboundLoginPacket;
 import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.ClientboundSystemChatPacket;
 import org.jspecify.annotations.NonNull;
@@ -61,22 +57,23 @@ public class LoginPostHandler implements PostOutgoingPacketHandler<ClientboundLo
 
     private void checkDisableServerVia(ServerSession session) {
         if (CONFIG.server.viaversion.enabled && CONFIG.server.viaversion.autoRemoveFromPipeline) {
-            var channel = session.getChannel();
-            if (session.getProtocolVersion().getVersion() == MinecraftCodec.CODEC.getProtocolVersion()
-                && channel.hasAttr(ZenithViaInitializer.VIA_USER)
-                && channel.pipeline().get(VLPipeline.VIA_CODEC_NAME) != null
-            ) {
-                SERVER_LOG.debug("Disabling ViaVersion for player: {}", session.getProfileCache().getProfile().getName());
-                try {
-                    var viaUser = channel.attr(ZenithViaInitializer.VIA_USER).get();
-                    // remove via codec from channel pipeline
-                    channel.pipeline().remove(VLPipeline.VIA_CODEC_NAME);
-                    // dispose via connection state
-                    Via.getManager().getConnectionManager().onDisconnect(viaUser);
-                } catch (final Throwable e) {
-                    SERVER_LOG.error("Error disabling ViaVersion for player: {}", session.getProfileCache().getProfile().getName(), e);
-                }
-            }
+            throw new RuntimeException("ViaVersion is not supported in this version");
+//            var channel = session.getChannel();
+//            if (session.getProtocolVersion().getVersion() == MinecraftCodec.CODEC.getProtocolVersion()
+//                && channel.hasAttr(ZenithViaInitializer.VIA_USER)
+//                && channel.pipeline().get(VLPipeline.VIA_CODEC_NAME) != null
+//            ) {
+//                SERVER_LOG.debug("Disabling ViaVersion for player: {}", session.getProfileCache().getProfile().getName());
+//                try {
+//                    var viaUser = channel.attr(ZenithViaInitializer.VIA_USER).get();
+//                    // remove via codec from channel pipeline
+//                    channel.pipeline().remove(VLPipeline.VIA_CODEC_NAME);
+//                    // dispose via connection state
+//                    Via.getManager().getConnectionManager().onDisconnect(viaUser);
+//                } catch (final Throwable e) {
+//                    SERVER_LOG.error("Error disabling ViaVersion for player: {}", session.getProfileCache().getProfile().getName(), e);
+//                }
+//            }
         }
     }
 }

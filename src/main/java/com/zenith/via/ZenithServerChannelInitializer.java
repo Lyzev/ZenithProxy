@@ -4,7 +4,7 @@ import io.netty.channel.Channel;
 import org.geysermc.mcprotocollib.network.tcp.TcpServer;
 import org.geysermc.mcprotocollib.network.tcp.TcpServerChannelInitializer;
 
-import static com.zenith.Shared.VIA_INITIALIZER;
+//import static com.zenith.Shared.VIA_INITIALIZER;
 
 public class ZenithServerChannelInitializer extends TcpServerChannelInitializer {
     public static final Factory FACTORY = ZenithServerChannelInitializer::new;
@@ -16,6 +16,6 @@ public class ZenithServerChannelInitializer extends TcpServerChannelInitializer 
     @Override
     protected void initChannel(final Channel channel) throws Exception {
         super.initChannel(channel);
-        VIA_INITIALIZER.serverViaChannelInitializer(channel);
+//        VIA_INITIALIZER.serverViaChannelInitializer(channel);
     }
 }

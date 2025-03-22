@@ -1,6 +1,5 @@
 package com.zenith.network.server.handler.shared.incoming;
 
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.zenith.network.registry.PacketHandler;
 import com.zenith.network.server.ServerSession;
 import com.zenith.network.server.ZenithServerInfoBuilder;
@@ -17,7 +16,7 @@ public class StatusRequestHandler implements PacketHandler<ServerboundStatusRequ
         if (CONFIG.server.ping.logPings)
             SERVER_LOG.info("[Ping] Request from: {} [{}] to: {}:{}",
                             session.getRemoteAddress(),
-                            ProtocolVersion.getProtocol(session.getProtocolVersionId()).getName(),
+                            session.getProtocolVersionId(), // ProtocolVersion.getProtocol(session.getProtocolVersionId()).getName()
                             session.getConnectingServerAddress(),
                             session.getConnectingServerPort());
         ServerStatusInfo info = ZenithServerInfoBuilder.INSTANCE.buildInfo(session);
