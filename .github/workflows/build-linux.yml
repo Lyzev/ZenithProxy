@@ -1,0 +1,67 @@
+name: Build Linux Artifact
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-java-and-linux-amd64:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Setup GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '23'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Echo Versions and Paths
+        run: |
+          echo "GRAALVM_HOME: $GRAALVM_HOME"
+          echo "JAVA_HOME: $JAVA_HOME"
+          java --version
+          native-image --version
+
+      - name: Elevate wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Export Tag
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          echo "RELEASE_TAG=$TAG_NAME" >> "$GITHUB_ENV"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          dependency-graph: generate-and-submit
+
+      - name: Build ZenithProxy Java
+        run: ./gradlew jarBuild
+
+      - name: Upload Java Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZenithProxy-java
+          path: build/libs/ZenithProxy.jar
+
+      - name: Enable GraalVM Profile Instrumenting
+        run: |
+          echo "GRAALVM_PGO_INSTRUMENT=true" >> "$GITHUB_ENV"
+
+      - name: Build ZenithProxy Linux Native
+        run: ./gradlew nativeCompile
+
+      - name: Elevate binary permissions
+        run: chmod +x build/native/nativeCompile/*
+
+      - name: Zip Binary And Libs
+        run: zip -j ZenithProxy.zip build/native/nativeCompile/*
+
+      - name: Upload Linux Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZenithProxy-linux
+          path: ZenithProxy.zip
