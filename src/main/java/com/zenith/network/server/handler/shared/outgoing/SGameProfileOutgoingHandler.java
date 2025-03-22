@@ -50,14 +50,14 @@ public class SGameProfileOutgoingHandler implements PacketHandler<ClientboundGam
                 }
             }
             if (CONFIG.server.extra.whitelist.enable && !PLAYER_LISTS.getWhitelist().contains(clientGameProfile)) {
-                if (CONFIG.server.spectator.allowSpectator && (!CONFIG.server.spectator.whitelistEnabled || PLAYER_LISTS.getSpectatorWhitelist().contains(clientGameProfile))) {
-                    onlySpectator = Optional.of(true);
-                } else {
+//                if (CONFIG.server.spectator.allowSpectator && (!CONFIG.server.spectator.whitelistEnabled || PLAYER_LISTS.getSpectatorWhitelist().contains(clientGameProfile))) {
+//                    onlySpectator = Optional.of(true);
+//                } else {
                     session.disconnect(CONFIG.server.extra.whitelist.kickmsg);
                     SERVER_LOG.warn("Username: {} UUID: {} [{}] MC: {} tried to connect!", clientGameProfile.getName(), clientGameProfile.getIdAsString(), session.getMCVersion(), session.getRemoteAddress());
                     EVENT_BUS.post(new NonWhitelistedPlayerConnectedEvent(clientGameProfile, session.getRemoteAddress()));
                     return null;
-                }
+//                }
             }
             SERVER_LOG.info("Username: {} UUID: {} MC: {} [{}] has passed the whitelist check!", clientGameProfile.getName(), clientGameProfile.getIdAsString(), session.getMCVersion(), session.getRemoteAddress());
             session.setWhitelistChecked(true);
@@ -131,25 +131,25 @@ public class SGameProfileOutgoingHandler implements PacketHandler<ClientboundGam
             session.disconnect("Someone is already controlling the player");
             return;
         }
-        if (!CONFIG.server.spectator.allowSpectator) {
+//        if (!CONFIG.server.spectator.allowSpectator) {
             session.disconnect("Spectator mode is disabled");
             return;
-        }
-        SERVER_LOG.info("Logging in {} [{}] ({}) as spectator", clientGameProfile.getName(), clientGameProfile.getId().toString(), session.getMCVersion());
-        session.setSpectator(true);
-        final GameProfile spectatorFakeProfile = new GameProfile(spectatorFakeUUID, clientGameProfile.getName());
-        if (clientGameProfile.getProperty("textures") == null) {
-                SessionServerApi.INSTANCE.getProfileAndSkin(clientGameProfile.getId())
-                    .ifPresentOrElse(p -> spectatorFakeProfile.setProperties(p.getProperties()),
-                                     () -> SERVER_LOG.info("Failed getting spectator skin for {} [{}] ({})", clientGameProfile.getName(), clientGameProfile.getId().toString(), session.getMCVersion()));
-        } else {
-            spectatorFakeProfile.setProperties(clientGameProfile.getProperties());
-        }
-        session.getSpectatorFakeProfileCache().setProfile(spectatorFakeProfile);
-        session.getEventLoop().execute(() -> {
-            session.send(new ClientboundGameProfilePacket(spectatorFakeProfile, false));
-            session.switchOutboundState(ProtocolState.CONFIGURATION);
-        });
-        return;
+//        }
+//        SERVER_LOG.info("Logging in {} [{}] ({}) as spectator", clientGameProfile.getName(), clientGameProfile.getId().toString(), session.getMCVersion());
+//        session.setSpectator(true);
+//        final GameProfile spectatorFakeProfile = new GameProfile(spectatorFakeUUID, clientGameProfile.getName());
+//        if (clientGameProfile.getProperty("textures") == null) {
+//                SessionServerApi.INSTANCE.getProfileAndSkin(clientGameProfile.getId())
+//                    .ifPresentOrElse(p -> spectatorFakeProfile.setProperties(p.getProperties()),
+//                                     () -> SERVER_LOG.info("Failed getting spectator skin for {} [{}] ({})", clientGameProfile.getName(), clientGameProfile.getId().toString(), session.getMCVersion()));
+//        } else {
+//            spectatorFakeProfile.setProperties(clientGameProfile.getProperties());
+//        }
+//        session.getSpectatorFakeProfileCache().setProfile(spectatorFakeProfile);
+//        session.getEventLoop().execute(() -> {
+//            session.send(new ClientboundGameProfilePacket(spectatorFakeProfile, false));
+//            session.switchOutboundState(ProtocolState.CONFIGURATION);
+//        });
+//        return;
     }
 }

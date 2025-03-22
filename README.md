@@ -15,6 +15,7 @@ I was able to reduce the memory usage of the proxy to about **65mb (~50% reducti
 - I removed all ViaVersion code, as it is not needed for 2b2t.org
 - I removed all Update/Version checking code, as it is not needed in my opinion.
 - I added Docker files to make it easier to run the proxy in a container. (See the `docker-graalvm` directory)
+- I removed features that I don't need, such as the Map, Spectator mode, ReplayMod, etc.
 
 ## Running the proxy
 

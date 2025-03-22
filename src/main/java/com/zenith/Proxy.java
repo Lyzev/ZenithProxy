@@ -12,7 +12,7 @@ import com.zenith.feature.queue.Queue;
 import com.zenith.module.impl.AutoReconnect;
 import com.zenith.network.client.Authenticator;
 import com.zenith.network.client.ClientSession;
-import com.zenith.network.server.LanBroadcaster;
+//import com.zenith.network.server.LanBroadcaster;
 import com.zenith.network.server.ProxyServerListener;
 import com.zenith.network.server.ServerSession;
 import com.zenith.util.ComponentSerializer;
@@ -84,7 +84,7 @@ public class Proxy {
     private Optional<Boolean> isPrio = Optional.empty();
     @Getter private final AtomicBoolean loggingIn = new AtomicBoolean(false);
 //    @Setter @NonNull private AutoUpdater autoUpdater = NoOpAutoUpdater.INSTANCE;
-    private LanBroadcaster lanBroadcaster;
+//    private LanBroadcaster lanBroadcaster;
     private TcpConnectionManager tcpManager;
 
     public static void main(String... args) {
@@ -132,10 +132,10 @@ public class Proxy {
             if (CONFIG.interactiveTerminal.enable) TERMINAL.start();
             MODULE.init();
             this.tcpManager = new TcpConnectionManager();
-            if (CONFIG.database.enabled) {
-                DATABASE.start();
-                DEFAULT_LOG.info("Started Databases");
-            }
+//            if (CONFIG.database.enabled) {
+//                DATABASE.start();
+//                DEFAULT_LOG.info("Started Databases");
+//            }
             if (CONFIG.discord.enable) {
                 boolean err = false;
                 try {
@@ -151,9 +151,9 @@ public class Proxy {
             Queue.start();
             saveConfigAsync();
             MinecraftConstants.CHUNK_SECTION_COUNT_PROVIDER = CACHE.getSectionCountProvider();
-            if (CONFIG.client.viaversion.enabled || CONFIG.server.viaversion.enabled) {
+//            if (CONFIG.client.viaversion.enabled || CONFIG.server.viaversion.enabled) {
 //                VIA_INITIALIZER.init();
-            }
+//            }
             startServer();
             CACHE.reset(CacheResetType.FULL);
             EXECUTOR.scheduleAtFixedRate(this::serverHealthCheck, 1L, 5L, TimeUnit.MINUTES);
@@ -433,10 +433,10 @@ public class Proxy {
         SERVER_LOG.info("Starting server on {}:{}...", address, port);
         this.server = new TcpServer(address, port, MinecraftProtocol::new, tcpManager, (socketAddress) -> new ServerSession(socketAddress.getHostName(), socketAddress.getPort(), (MinecraftProtocol) server.createPacketProtocol(), server));
         this.server.setGlobalFlag(MinecraftConstants.SERVER_CHANNEL_INITIALIZER, ZenithServerChannelInitializer.FACTORY);
-        if (this.lanBroadcaster == null && CONFIG.server.ping.lanBroadcast) {
-            this.lanBroadcaster = new LanBroadcaster();
-            lanBroadcaster.start();
-        }
+//        if (this.lanBroadcaster == null && CONFIG.server.ping.lanBroadcast) {
+//            this.lanBroadcaster = new LanBroadcaster();
+//            lanBroadcaster.start();
+//        }
         this.server.setGlobalFlag(MinecraftConstants.AUTOMATIC_KEEP_ALIVE_MANAGEMENT, true);
         this.server.addListener(new ProxyServerListener());
         this.server.bind(false);
@@ -445,10 +445,10 @@ public class Proxy {
     public synchronized void stopServer() {
         SERVER_LOG.info("Stopping server...");
         if (this.server != null && this.server.isListening()) this.server.close(true);
-        if (this.lanBroadcaster != null) {
-            this.lanBroadcaster.stop();
-            this.lanBroadcaster = null;
-        }
+//        if (this.lanBroadcaster != null) {
+//            this.lanBroadcaster.stop();
+//            this.lanBroadcaster = null;
+//        }
     }
 
     public synchronized @NonNull MinecraftProtocol logIn() {
@@ -565,7 +565,9 @@ public class Proxy {
             var connection = connections[i];
             if (connection.getProfileCache().getProfile() == null) continue;
             if (PLAYER_LISTS.getWhitelist().contains(connection.getProfileCache().getProfile())) continue;
-            if (PLAYER_LISTS.getSpectatorWhitelist().contains(connection.getProfileCache().getProfile()) && connection.isSpectator()) continue;
+            if (
+//                    PLAYER_LISTS.getSpectatorWhitelist().contains(connection.getProfileCache().getProfile()) &&
+                    connection.isSpectator()) continue;
             connection.disconnect("Not whitelisted");
         }
     }

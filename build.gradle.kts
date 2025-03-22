@@ -73,9 +73,9 @@ dependencies {
     api("io.netty:netty-resolver-dns-native-macos:$nettyVersion:osx-aarch_64")
     api("org.cloudburstmc.math:api:2.0")
     api("org.cloudburstmc.math:immutable:2.0")
-    api("org.redisson:redisson:3.45.1") {
-        exclude(group = "io.netty")
-    }
+//    api("org.redisson:redisson:3.45.1") {
+//        exclude(group = "io.netty")
+//    }
     api("com.github.rfresh2:SimpleEventBus:1.4")
     val fastutilVersion = "8.5.15"
     api("com.github.rfresh2.fastutil.maps:object-object-maps:$fastutilVersion")
@@ -91,9 +91,9 @@ dependencies {
     api("org.jline:jline:3.29.0")
     api("org.jline:jline-terminal-jni:3.29.0")
     api("ar.com.hjg:pngj:2.1.0")
-    api("com.zaxxer:HikariCP:6.2.1")
-    api("org.postgresql:postgresql:42.7.5")
-    api("org.jdbi:jdbi3-postgres:3.48.0")
+//    api("com.zaxxer:HikariCP:6.2.1")
+//    api("org.postgresql:postgresql:42.7.5")
+//    api("org.jdbi:jdbi3-postgres:3.48.0")
     api("com.google.guava:guava:33.4.0-jre")
     api("ch.qos.logback:logback-classic:1.5.17")
     api("org.slf4j:slf4j-api:2.0.17")

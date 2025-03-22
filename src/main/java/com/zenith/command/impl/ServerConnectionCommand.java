@@ -103,13 +103,13 @@ public class ServerConnectionCommand extends Command {
                               .title("Ping Max Players Set!");
                           return 1;
                       })))
-                      .then(literal("lanBroadcast")
-                                .then(argument("lanBroadcastToggle", toggle()).executes(context -> {
-                                    CONFIG.server.ping.lanBroadcast = getToggle(context, "lanBroadcastToggle");
-                                    context.getSource().getEmbed()
-                                        .title("Ping LAN Broadcast Set!");
-                                    return 1;
-                                })))
+//                      .then(literal("lanBroadcast")
+//                                .then(argument("lanBroadcastToggle", toggle()).executes(context -> {
+//                                    CONFIG.server.ping.lanBroadcast = getToggle(context, "lanBroadcastToggle");
+//                                    context.getSource().getEmbed()
+//                                        .title("Ping LAN Broadcast Set!");
+//                                    return 1;
+//                                })))
                       .then(literal("log")
                                 .then(argument("toggle", toggle()).executes(c -> {
                                     CONFIG.server.ping.logPings = getToggle(c, "toggle");
@@ -167,7 +167,7 @@ public class ServerConnectionCommand extends Command {
             .addField("Ping Reports Online Players", toggleStr(CONFIG.server.ping.onlinePlayers), false)
             .addField("Ping Reports Online Player Count", toggleStr(CONFIG.server.ping.onlinePlayerCount), false)
             .addField("Ping Max Players", CONFIG.server.ping.maxPlayers, false)
-            .addField("Ping LAN Broadcast", toggleStr(CONFIG.server.ping.lanBroadcast), false)
+//            .addField("Ping LAN Broadcast", toggleStr(CONFIG.server.ping.lanBroadcast), false)
             .addField("Ping Log", toggleStr(CONFIG.server.ping.logPings), false)
             .addField("Enforce Matching Connecting Address", toggleStr(CONFIG.server.enforceMatchingConnectingAddress), false)
             .addField("Timeout", CONFIG.server.extra.timeout.enable ? CONFIG.server.extra.timeout.seconds : toggleStr(false), false)

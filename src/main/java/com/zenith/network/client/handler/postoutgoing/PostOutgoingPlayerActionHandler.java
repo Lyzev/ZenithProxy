@@ -5,7 +5,7 @@ import com.zenith.network.registry.ClientEventLoopPacketHandler;
 import org.geysermc.mcprotocollib.protocol.packet.ingame.serverbound.player.ServerboundPlayerActionPacket;
 
 import static com.zenith.Shared.CACHE;
-import static com.zenith.feature.spectator.SpectatorSync.syncPlayerEquipmentWithSpectatorsFromCache;
+//import static com.zenith.feature.spectator.SpectatorSync.syncPlayerEquipmentWithSpectatorsFromCache;
 
 public class PostOutgoingPlayerActionHandler implements ClientEventLoopPacketHandler<ServerboundPlayerActionPacket, ClientSession> {
     @Override
@@ -19,13 +19,13 @@ public class PostOutgoingPlayerActionHandler implements ClientEventLoopPacketHan
                 itemStack.setAmount(itemStack.getAmount() - 1);
                 if (itemStack.getAmount() <= 0)
                     CACHE.getPlayerCache().getPlayerInventory().set(invIndex, null);
-                syncPlayerEquipmentWithSpectatorsFromCache();
+//                syncPlayerEquipmentWithSpectatorsFromCache();
             }
             case DROP_ALL_ITEMS -> {
                 var heldItemSlot = CACHE.getPlayerCache().getHeldItemSlot();
                 var invIndex = heldItemSlot + 36;
                 CACHE.getPlayerCache().getPlayerInventory().set(invIndex, null);
-                syncPlayerEquipmentWithSpectatorsFromCache();
+//                syncPlayerEquipmentWithSpectatorsFromCache();
             }
             case SWAP_ITEM_WITH_OFFHAND -> { // this seems to trigger the server to send an inventory update but let's just do it anyway
                 var invIndex = CACHE.getPlayerCache().getHeldItemSlot() + 36;
@@ -34,7 +34,7 @@ public class PostOutgoingPlayerActionHandler implements ClientEventLoopPacketHan
                 var mainHand = CACHE.getPlayerCache().getPlayerInventory().get(invIndex);
                 CACHE.getPlayerCache().getPlayerInventory().set(offHandIndex, mainHand);
                 CACHE.getPlayerCache().getPlayerInventory().set(invIndex, offHand);
-                syncPlayerEquipmentWithSpectatorsFromCache();
+//                syncPlayerEquipmentWithSpectatorsFromCache();
             }
         }
         return true;

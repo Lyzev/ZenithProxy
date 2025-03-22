@@ -2,7 +2,7 @@ package com.zenith.network.client.handler.incoming;
 
 import com.zenith.Proxy;
 import com.zenith.cache.data.PlayerCache;
-import com.zenith.feature.spectator.SpectatorSync;
+//import com.zenith.feature.spectator.SpectatorSync;
 import com.zenith.module.impl.AntiAFK;
 import com.zenith.module.impl.PlayerSimulation;
 import com.zenith.network.client.ClientSession;
@@ -35,7 +35,7 @@ public class PlayerPositionHandler implements ClientEventLoopPacketHandler<Clien
         if (isNull(currentPlayer) || !currentPlayer.isLoggedIn()) {
             MODULE.get(PlayerSimulation.class).handlePlayerPosRotate(packet.getTeleportId());
         } // else send to active player
-        SpectatorSync.syncPlayerPositionWithSpectators();
+//        SpectatorSync.syncPlayerPositionWithSpectators();
         MODULE.get(AntiAFK.class).handlePlayerPosRotate();
         return true;
     }

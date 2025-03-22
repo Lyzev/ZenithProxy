@@ -54,13 +54,13 @@ public class DeathMessagesParser {
             final Optional<DeathMessageParseResult> parse = instance.parse(inputSplit, playerNames);
             if (parse.isPresent()) return parse;
         }
-        if (CONFIG.database.enabled && CONFIG.database.deathsEnabled && CONFIG.database.unknownDeathDiscordMsg) {
-            DISCORD.sendEmbedMessage(Embed.builder()
-                                         .title("Unknown death message")
-                                         .description(ComponentSerializer.serializeJson(component))
-                                         .addField("Message", rawInput, false)
-                                         .errorColor());
-        }
+//        if (CONFIG.database.enabled && CONFIG.database.deathsEnabled && CONFIG.database.unknownDeathDiscordMsg) {
+//            DISCORD.sendEmbedMessage(Embed.builder()
+//                                         .title("Unknown death message")
+//                                         .description(ComponentSerializer.serializeJson(component))
+//                                         .addField("Message", rawInput, false)
+//                                         .errorColor());
+//        }
         DEFAULT_LOG.warn("No death message schema found for '{}'", rawInput);
         return Optional.empty();
     }

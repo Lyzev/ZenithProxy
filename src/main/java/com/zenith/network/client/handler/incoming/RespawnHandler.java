@@ -1,7 +1,7 @@
 package com.zenith.network.client.handler.incoming;
 
 import com.zenith.cache.CacheResetType;
-import com.zenith.feature.spectator.SpectatorSync;
+//import com.zenith.feature.spectator.SpectatorSync;
 import com.zenith.feature.world.World;
 import com.zenith.module.impl.PlayerSimulation;
 import com.zenith.network.client.ClientSession;
@@ -17,7 +17,7 @@ import static com.zenith.Shared.*;
 
 public class RespawnHandler implements ClientEventLoopPacketHandler<ClientboundRespawnPacket, ClientSession> {
 
-    private final AtomicBoolean isSpectatorRespawning = new AtomicBoolean(false);
+//    private final AtomicBoolean isSpectatorRespawning = new AtomicBoolean(false);
 
     @Override
     public ClientboundRespawnPacket apply(@NonNull ClientboundRespawnPacket packet, @NonNull ClientSession session) {
@@ -30,19 +30,19 @@ public class RespawnHandler implements ClientEventLoopPacketHandler<ClientboundR
     public boolean applyAsync(final ClientboundRespawnPacket packet, final ClientSession session) {
         // must send respawn packet before cache gets reset
         // lots of race conditions with packet sequence could happen
-        if (isSpectatorRespawning.compareAndSet(false, true)) {
-            /**
-             * see https://c4k3.github.io/wiki.vg/Protocol.html#Respawn
-             * If you must respawn a player in the same dimension without killing them,
-             * send two respawn packets, one to a different world and then another to the
-             * world you want. You do not need to complete the first respawn;
-             * it only matters that you send two packets.
-             */
-            // we need this method to be invoked *after* the 2nd respawn packet
-            // and we only want to invoke it once (on the first)
-            // delay is a hacky workaround and might still get caught in race condition sometimes
-            EXECUTOR.schedule(this::spectatorRespawn, 3L, TimeUnit.SECONDS);
-        }
+//        if (isSpectatorRespawning.compareAndSet(false, true)) {
+//            /**
+//             * see https://c4k3.github.io/wiki.vg/Protocol.html#Respawn
+//             * If you must respawn a player in the same dimension without killing them,
+//             * send two respawn packets, one to a different world and then another to the
+//             * world you want. You do not need to complete the first respawn;
+//             * it only matters that you send two packets.
+//             */
+//            // we need this method to be invoked *after* the 2nd respawn packet
+//            // and we only want to invoke it once (on the first)
+//            // delay is a hacky workaround and might still get caught in race condition sometimes
+//            EXECUTOR.schedule(this::spectatorRespawn, 3L, TimeUnit.SECONDS);
+//        }
         if (!Objects.equals(World.getCurrentDimension().id(), packet.getCommonPlayerSpawnInfo().getDimension())) {
             CACHE.reset(CacheResetType.RESPAWN);
         }
@@ -58,12 +58,12 @@ public class RespawnHandler implements ClientEventLoopPacketHandler<ClientboundR
         return true;
     }
 
-    private void spectatorRespawn() {
-        try {
-            // load world and init self
-            SpectatorSync.sendRespawn();
-        } finally {
-            isSpectatorRespawning.set(false);
-        }
-    }
+//    private void spectatorRespawn() {
+//        try {
+//            // load world and init self
+//            SpectatorSync.sendRespawn();
+//        } finally {
+//            isSpectatorRespawning.set(false);
+//        }
+//    }
 }

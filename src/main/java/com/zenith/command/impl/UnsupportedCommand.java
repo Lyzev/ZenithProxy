@@ -52,12 +52,12 @@ public class UnsupportedCommand extends Command {
                     .title("Whitelist " + toggleStrCaps(CONFIG.server.extra.whitelist.enable));
                 return OK;
             })))
-            .then(literal("spectatorWhitelist").then(argument("toggle", toggle()).executes(c -> {
-                CONFIG.server.spectator.whitelistEnabled = getToggle(c, "toggle");
-                c.getSource().getEmbed()
-                    .title("Spectator Whitelist " + toggleStrCaps(CONFIG.server.spectator.whitelistEnabled));
-                return OK;
-            })))
+//            .then(literal("spectatorWhitelist").then(argument("toggle", toggle()).executes(c -> {
+//                CONFIG.server.spectator.whitelistEnabled = getToggle(c, "toggle");
+//                c.getSource().getEmbed()
+//                    .title("Spectator Whitelist " + toggleStrCaps(CONFIG.server.spectator.whitelistEnabled));
+//                return OK;
+//            })))
             .then(literal("allowOfflinePlayers").then(argument("toggle", toggle()).executes(c -> {
                 CONFIG.server.verifyUsers = getToggle(c, "toggle");
                 c.getSource().getEmbed()
@@ -86,7 +86,7 @@ public class UnsupportedCommand extends Command {
     public void postPopulate(Embed builder) {
         builder
             .addField("Whitelist", toggleStr(CONFIG.server.extra.whitelist.enable))
-            .addField("Spectator Whitelist", toggleStr(CONFIG.server.spectator.whitelistEnabled))
+//            .addField("Spectator Whitelist", toggleStr(CONFIG.server.spectator.whitelistEnabled))
             .addField("Allow Offline Players", toggleStr(CONFIG.server.verifyUsers))
             .addField("Offline Authentication", toggleStr(CONFIG.authentication.accountType == OFFLINE))
             .addField("Offline Username", escape(CONFIG.authentication.username))

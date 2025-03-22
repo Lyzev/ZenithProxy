@@ -69,8 +69,8 @@ public class PlayerSimulation extends Module {
     private final Input movementInput = new Input();
     private InputRequestFuture inputRequestFuture = InputRequestFuture.rejected;
     private int waitTicks = 0;
-    private static final CollisionBox STANDING_COLLISION_BOX = new CollisionBox(-0.3, 0.3, 0, 1.8, -0.3, 0.3);
-    private static final CollisionBox SNEAKING_COLLISION_BOX = new CollisionBox(-0.3, 0.3, 0, 1.5, -0.3, 0.3);
+    private static final CollisionBox STANDING_COLLISION_BOX = new CollisionBox(-0.3f, 0.3f, 0, 1.8f, -0.3f, 0.3f);
+    private static final CollisionBox SNEAKING_COLLISION_BOX = new CollisionBox(-0.3f, 0.3f, 0, 1.5f, -0.3f, 0.3f);
     @Getter private LocalizedCollisionBox playerCollisionBox = new LocalizedCollisionBox(STANDING_COLLISION_BOX, 0, 0, 0);
     private double gravity = 0.08;
     private float stepHeight = 0.6f;

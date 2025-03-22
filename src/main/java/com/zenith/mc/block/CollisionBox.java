@@ -1,6 +1,6 @@
 package com.zenith.mc.block;
 
-public record CollisionBox(double minX, double maxX, double minY, double maxY, double minZ, double maxZ) {
+public record CollisionBox(float minX, float maxX, float minY, float maxY, float minZ, float maxZ) {
     public boolean intersects(final CollisionBox collisionBox) {
         return this.maxX >= collisionBox.minX && this.minX <= collisionBox.maxX
             && this.maxZ >= collisionBox.minZ && this.minZ <= collisionBox.maxZ

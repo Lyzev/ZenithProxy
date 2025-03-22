@@ -160,33 +160,33 @@ public class VisualRangeCommand extends Command {
                             c.getSource().getEmbed()
                                 .title("Logout Alerts " + toggleStrCaps(CONFIG.client.extra.visualRange.logoutAlert));
                             return OK;
-                      })))
-            .then(literal("replayRecording")
-                      .then(argument("toggle", toggle()).executes(c -> {
-                            CONFIG.client.extra.visualRange.replayRecording = getToggle(c, "toggle");
-                            c.getSource().getEmbed()
-                                .title("Replay Recording " + toggleStrCaps(CONFIG.client.extra.visualRange.replayRecording));
-                            return OK;
-                      }))
-                      .then(literal("mode")
-                                .then(literal("enemy").executes(c -> {
-                                    CONFIG.client.extra.visualRange.replayRecordingMode = Config.Client.Extra.VisualRange.ReplayRecordingMode.ENEMY;
-                                    c.getSource().getEmbed()
-                                        .title("Replay Recording Mode Set");
-                                    return OK;
-                                }))
-                                .then(literal("all").executes(c -> {
-                                    CONFIG.client.extra.visualRange.replayRecordingMode = Config.Client.Extra.VisualRange.ReplayRecordingMode.ALL;
-                                    c.getSource().getEmbed()
-                                        .title("Replay Recording Mode Set");
-                                    return OK;
-                                })))
-                      .then(literal("cooldown").then(argument("minutes", integer(0)).executes(c -> {
-                          CONFIG.client.extra.visualRange.replayRecordingCooldownMins = getInteger(c, "minutes");
-                          c.getSource().getEmbed()
-                              .title("Enemy Replay Recording Cooldown Set");
-                          return OK;
-                      }))));
+                      })));
+//            .then(literal("replayRecording")
+//                      .then(argument("toggle", toggle()).executes(c -> {
+//                            CONFIG.client.extra.visualRange.replayRecording = getToggle(c, "toggle");
+//                            c.getSource().getEmbed()
+//                                .title("Replay Recording " + toggleStrCaps(CONFIG.client.extra.visualRange.replayRecording));
+//                            return OK;
+//                      }))
+//                      .then(literal("mode")
+//                                .then(literal("enemy").executes(c -> {
+//                                    CONFIG.client.extra.visualRange.replayRecordingMode = Config.Client.Extra.VisualRange.ReplayRecordingMode.ENEMY;
+//                                    c.getSource().getEmbed()
+//                                        .title("Replay Recording Mode Set");
+//                                    return OK;
+//                                }))
+//                                .then(literal("all").executes(c -> {
+//                                    CONFIG.client.extra.visualRange.replayRecordingMode = Config.Client.Extra.VisualRange.ReplayRecordingMode.ALL;
+//                                    c.getSource().getEmbed()
+//                                        .title("Replay Recording Mode Set");
+//                                    return OK;
+//                                })))
+//                      .then(literal("cooldown").then(argument("minutes", integer(0)).executes(c -> {
+//                          CONFIG.client.extra.visualRange.replayRecordingCooldownMins = getInteger(c, "minutes");
+//                          c.getSource().getEmbed()
+//                              .title("Enemy Replay Recording Cooldown Set");
+//                          return OK;
+//                      }))));
     }
 
     @Override
@@ -201,9 +201,9 @@ public class VisualRangeCommand extends Command {
             .addField("Ignore Friends", toggleStr(CONFIG.client.extra.visualRange.ignoreFriends), false)
             .addField("Leave Alerts", toggleStr(CONFIG.client.extra.visualRange.leaveAlert), false)
             .addField("Logout Alerts", toggleStr(CONFIG.client.extra.visualRange.logoutAlert), false)
-            .addField("Replay Recording", toggleStr(CONFIG.client.extra.visualRange.replayRecording), false)
-            .addField("Replay Recording Mode", CONFIG.client.extra.visualRange.replayRecordingMode.toString().toLowerCase(), false)
-            .addField("Replay Recording Cooldown", CONFIG.client.extra.visualRange.replayRecordingCooldownMins, false)
+//            .addField("Replay Recording", toggleStr(CONFIG.client.extra.visualRange.replayRecording), false)
+//            .addField("Replay Recording Mode", CONFIG.client.extra.visualRange.replayRecordingMode.toString().toLowerCase(), false)
+//            .addField("Replay Recording Cooldown", CONFIG.client.extra.visualRange.replayRecordingCooldownMins, false)
             .primaryColor();
     }
 }

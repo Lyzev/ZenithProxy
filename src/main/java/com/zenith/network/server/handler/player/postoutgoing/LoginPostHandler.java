@@ -28,14 +28,14 @@ public class LoginPostHandler implements PostOutgoingPacketHandler<ClientboundLo
         DataCache.sendCacheData(CACHE.getAllData(), session);
         session.initializeTeam();
         session.syncTeamMembers();
-        var connections = Proxy.getInstance().getActiveConnections().getArray();
-        for (int i = 0; i < connections.length; i++) {
-            var connection = connections[i];
-            if (connection.equals(session)) continue;
-            if (connection.hasCameraTarget()) continue;
-            session.send(connection.getEntitySpawnPacket());
-            session.send(connection.getEntityMetadataPacket());
-        }
+//        var connections = Proxy.getInstance().getActiveConnections().getArray();
+//        for (int i = 0; i < connections.length; i++) {
+//            var connection = connections[i];
+//            if (connection.equals(session)) continue;
+//            if (connection.hasCameraTarget()) continue;
+//            session.send(connection.getEntitySpawnPacket());
+//            session.send(connection.getEntityMetadataPacket());
+//        }
         if (CONFIG.client.extra.chat.hideChat) {
             session.send(new ClientboundSystemChatPacket(ComponentSerializer.minimessage("<gray>Chat is currently disabled. To enable chat, type <red>/togglechat"), false));
         }

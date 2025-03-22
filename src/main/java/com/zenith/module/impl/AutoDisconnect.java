@@ -75,7 +75,7 @@ public class AutoDisconnect extends Module {
         var playerUUID = event.playerEntity().getUuid();
         if (PLAYER_LISTS.getFriendsList().contains(playerUUID)
             || PLAYER_LISTS.getWhitelist().contains(playerUUID)
-            || PLAYER_LISTS.getSpectatorWhitelist().contains(playerUUID)
+//            || PLAYER_LISTS.getSpectatorWhitelist().contains(playerUUID)
             || !playerConnectedCheck()
         ) return;
         info("Unknown Player: {} [{}]", event.playerEntry().getProfile());

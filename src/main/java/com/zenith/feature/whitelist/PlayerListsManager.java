@@ -25,7 +25,7 @@ import static com.zenith.Shared.*;
 @Getter
 public class PlayerListsManager {
     private PlayerList whitelist;
-    private PlayerList spectatorWhitelist;
+//    private PlayerList spectatorWhitelist;
     private PlayerList friendsList;
     private PlayerList ignoreList;
     private PlayerList stalkList;
@@ -33,7 +33,7 @@ public class PlayerListsManager {
 
     public void init() { // must be called after config is loaded
         whitelist = new PlayerList("whitelist", CONFIG.server.extra.whitelist.whitelist);
-        spectatorWhitelist = new PlayerList("spectatorWhitelist", CONFIG.server.spectator.whitelist);
+//        spectatorWhitelist = new PlayerList("spectatorWhitelist", CONFIG.server.spectator.whitelist);
         friendsList = new PlayerList("friendsList", CONFIG.client.extra.friendsList);
         ignoreList = new PlayerList("ignoreList", CONFIG.client.extra.chat.ignoreList);
         stalkList = new PlayerList("stalkList", CONFIG.client.extra.stalk.stalking);
@@ -57,7 +57,9 @@ public class PlayerListsManager {
 
     private void refreshLists() {
         var playerEntryList = Stream
-            .of(getWhitelist(), getSpectatorWhitelist(), getFriendsList(), getIgnoreList(), getStalkList())
+            .of(getWhitelist(),
+//                    getSpectatorWhitelist(),
+                    getFriendsList(), getIgnoreList(), getStalkList())
             .map(PlayerList::entries)
             .flatMap(Collection::stream)
             .toList();

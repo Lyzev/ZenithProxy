@@ -7,11 +7,11 @@ import com.zenith.cache.data.cookie.CookieCache;
 import com.zenith.cache.data.entity.Entity;
 import com.zenith.cache.data.entity.EntityCache;
 import com.zenith.event.proxy.ProxyClientDisconnectedEvent;
-import com.zenith.event.proxy.ProxySpectatorDisconnectedEvent;
+//import com.zenith.event.proxy.ProxySpectatorDisconnectedEvent;
 import com.zenith.feature.ratelimiter.LoginRateLimiter;
 import com.zenith.feature.ratelimiter.PacketRateLimiter;
-import com.zenith.feature.spectator.SpectatorEntityRegistry;
-import com.zenith.feature.spectator.entity.SpectatorEntity;
+//import com.zenith.feature.spectator.SpectatorEntityRegistry;
+//import com.zenith.feature.spectator.entity.SpectatorEntity;
 import com.zenith.network.registry.ZenithHandlerCodec;
 import com.zenith.util.ComponentSerializer;
 import io.netty.channel.ChannelException;
@@ -105,9 +105,9 @@ public class ServerSession extends TcpServerSession {
     protected int spectatorSelfEntityId = spectatorEntityId - 1;
     protected UUID spectatorEntityUUID = UUID.randomUUID();
     protected ServerProfileCache profileCache = new ServerProfileCache();
-    protected ServerProfileCache spectatorFakeProfileCache = new ServerProfileCache();
-    protected PlayerCache spectatorPlayerCache = new PlayerCache(new EntityCache());
-    protected SpectatorEntity spectatorEntity;
+//    protected ServerProfileCache spectatorFakeProfileCache = new ServerProfileCache();
+//    protected PlayerCache spectatorPlayerCache = new PlayerCache(new EntityCache());
+//    protected SpectatorEntity spectatorEntity;
 
     /**
      * Team data
@@ -133,7 +133,7 @@ public class ServerSession extends TcpServerSession {
     public ServerSession(final String host, final int port, final MinecraftProtocol protocol, final TcpServer server) {
         super(host, port, protocol, server);
         ThreadLocalRandom.current().nextBytes(this.challenge);
-        initSpectatorEntity();
+//        initSpectatorEntity();
     }
 
     public EventLoop getEventLoop() {
@@ -224,19 +224,19 @@ public class ServerSession extends TcpServerSession {
                     s.sendAsyncAlert("<red>" + Optional.ofNullable(this.profileCache.getProfile()).map(GameProfile::getName).orElse("?") + " disconnected from controlling player");
                 });
             } else {
-                SERVER_LOG.info("Spectator disconnected: UUID: {}, Username: {}, Address: {}, Reason {}",
-                                Optional.ofNullable(this.profileCache.getProfile()).map(GameProfile::getId).orElse(null),
-                                Optional.ofNullable(this.profileCache.getProfile()).map(GameProfile::getName).orElse(null),
-                                getRemoteAddress(),
-                                reasonStr,
-                                cause);
-                var connections = Proxy.getInstance().getActiveConnections().getArray();
-                for (int i = 0; i < connections.length; i++) {
-                    var connection = connections[i];
-                    connection.send(new ClientboundRemoveEntitiesPacket(new int[]{this.spectatorEntityId}));
-                    connection.sendAsyncAlert("<red>" + Optional.ofNullable(this.profileCache.getProfile()).map(GameProfile::getName).orElse("?") + " disconnected from spectator");
-                }
-                EVENT_BUS.postAsync(new ProxySpectatorDisconnectedEvent(profileCache.getProfile()));
+//                SERVER_LOG.info("Spectator disconnected: UUID: {}, Username: {}, Address: {}, Reason {}",
+//                                Optional.ofNullable(this.profileCache.getProfile()).map(GameProfile::getId).orElse(null),
+//                                Optional.ofNullable(this.profileCache.getProfile()).map(GameProfile::getName).orElse(null),
+//                                getRemoteAddress(),
+//                                reasonStr,
+//                                cause);
+//                var connections = Proxy.getInstance().getActiveConnections().getArray();
+//                for (int i = 0; i < connections.length; i++) {
+//                    var connection = connections[i];
+//                    connection.send(new ClientboundRemoveEntitiesPacket(new int[]{this.spectatorEntityId}));
+//                    connection.sendAsyncAlert("<red>" + Optional.ofNullable(this.profileCache.getProfile()).map(GameProfile::getName).orElse("?") + " disconnected from spectator");
+//                }
+//                EVENT_BUS.postAsync(new ProxySpectatorDisconnectedEvent(profileCache.getProfile()));
             }
         }
         ServerSession serverConnection = Proxy.getInstance().getCurrentPlayer().get();
@@ -296,46 +296,46 @@ public class ServerSession extends TcpServerSession {
 
     // Spectator helper methods
 
-    public Packet getEntitySpawnPacket() {
-        return spectatorEntity.getSpawnPacket(spectatorEntityId, spectatorEntityUUID, spectatorPlayerCache, spectatorFakeProfileCache.getProfile());
-    }
-
-    public ClientboundSetEntityDataPacket getSelfEntityMetadataPacket() {
-        return new ClientboundSetEntityDataPacket(spectatorEntityId, spectatorEntity.getSelfEntityMetadata(
-            profileCache.getProfile(),
-            spectatorFakeProfileCache.getProfile(),
-            spectatorEntityId));
-    }
-
-    public ClientboundSetEntityDataPacket getEntityMetadataPacket() {
-        return new ClientboundSetEntityDataPacket(spectatorEntityId, spectatorEntity.getEntityMetadata(
-            profileCache.getProfile(),
-            spectatorFakeProfileCache.getProfile(),
-            spectatorEntityId));
-    }
-
-    public Optional<Packet> getSoundPacket() {
-        return spectatorEntity.getSoundPacket(spectatorPlayerCache);
-    }
+//    public Packet getEntitySpawnPacket() {
+//        return spectatorEntity.getSpawnPacket(spectatorEntityId, spectatorEntityUUID, spectatorPlayerCache, spectatorFakeProfileCache.getProfile());
+//    }
+//
+//    public ClientboundSetEntityDataPacket getSelfEntityMetadataPacket() {
+//        return new ClientboundSetEntityDataPacket(spectatorEntityId, spectatorEntity.getSelfEntityMetadata(
+//            profileCache.getProfile(),
+//            spectatorFakeProfileCache.getProfile(),
+//            spectatorEntityId));
+//    }
+//
+//    public ClientboundSetEntityDataPacket getEntityMetadataPacket() {
+//        return new ClientboundSetEntityDataPacket(spectatorEntityId, spectatorEntity.getEntityMetadata(
+//            profileCache.getProfile(),
+//            spectatorFakeProfileCache.getProfile(),
+//            spectatorEntityId));
+//    }
+//
+//    public Optional<Packet> getSoundPacket() {
+//        return spectatorEntity.getSoundPacket(spectatorPlayerCache);
+//    }
 
     public boolean hasCameraTarget() {
         return cameraTarget != null;
     }
 
-    public void initSpectatorEntity() {
-        this.spectatorEntity = SpectatorEntityRegistry.getSpectatorEntityWithDefault(CONFIG.server.spectator.spectatorEntity);
-    }
+//    public void initSpectatorEntity() {
+//        this.spectatorEntity = SpectatorEntityRegistry.getSpectatorEntityWithDefault(CONFIG.server.spectator.spectatorEntity);
+//    }
 
     // todo: might rework this to handle respawns in some central place
-    public boolean setSpectatorEntity(final String identifier) {
-        Optional<SpectatorEntity> entity = SpectatorEntityRegistry.getSpectatorEntity(identifier);
-        if (entity.isPresent()) {
-            this.spectatorEntity = entity.get();
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public boolean setSpectatorEntity(final String identifier) {
+//        Optional<SpectatorEntity> entity = SpectatorEntityRegistry.getSpectatorEntity(identifier);
+//        if (entity.isPresent()) {
+//            this.spectatorEntity = entity.get();
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     public void initializeTeam() {
         send(new ClientboundSetPlayerTeamPacket(

@@ -114,8 +114,8 @@ public class StatusCommand extends Command {
                     .addField("AutoEat", toggleStr(MODULE.get(AutoEat.class).isEnabled()), true)
                     .addField("AntiAFK", toggleStr(MODULE.get(AntiAFK.class).isEnabled()), true)
                     .addField("AutoRespawn", toggleStr(MODULE.get(AutoRespawn.class).isEnabled()), true)
-                    .addField("ViaVersion", "Z->S: " + toggleStr(CONFIG.client.viaversion.enabled)
-                        + "\nP->Z: " + toggleStr(CONFIG.server.viaversion.enabled), true)
+//                    .addField("ViaVersion", "Z->S: " + toggleStr(CONFIG.client.viaversion.enabled)
+//                        + "\nP->Z: " + toggleStr(CONFIG.server.viaversion.enabled), true)
                     .addField("VisualRange", toggleStr(MODULE.get(VisualRange.class).isEnabled()), true)
                     .addField("AntiLeak", toggleStr(MODULE.get(AntiLeak.class).isEnabled()), true)
                     .addField("AntiKick", toggleStr(MODULE.get(AntiKick.class).isEnabled()), true)
@@ -125,10 +125,10 @@ public class StatusCommand extends Command {
                     .addField("AutoReply", toggleStr(MODULE.get(AutoReply.class).isEnabled()), true)
                     .addField("ActionLimiter", toggleStr(MODULE.get(ActionLimiter.class).isEnabled()), true)
                     .addField("Spammer", toggleStr(MODULE.get(Spammer.class).isEnabled()), true)
-                    .addField("Replay Recording", toggleStr(MODULE.get(ReplayMod.class).isEnabled()), true)
+//                    .addField("Replay Recording", toggleStr(MODULE.get(ReplayMod.class).isEnabled()), true)
                     .addField("ESP", toggleStr(MODULE.get(ESP.class).isEnabled()), true)
-                    .addField("AutoArmor", toggleStr(MODULE.get(AutoArmor.class).isEnabled()), true)
-                    .addField("ChatHistory", toggleStr(MODULE.get(ChatHistory.class).isEnabled()), true);
+                    .addField("AutoArmor", toggleStr(MODULE.get(AutoArmor.class).isEnabled()), true);
+//                    .addField("ChatHistory", toggleStr(MODULE.get(ChatHistory.class).isEnabled()), true);
             }))
             .executes(c -> {
                 final var embed = c.getSource().getEmbed();
@@ -154,7 +154,7 @@ public class StatusCommand extends Command {
                     .addField("Server", CONFIG.client.server.address + ':' + CONFIG.client.server.port, true)
                     .addField("Priority Queue", (CONFIG.authentication.prio ? "yes" : "no") + " [" + (CONFIG.authentication.prioBanned ? "banned" : "unbanned") + "]", true);
                     // end row 3
-                embed.addField("Spectators", toggleStr(CONFIG.server.spectator.allowSpectator),true);
+//                embed.addField("Spectators", toggleStr(CONFIG.server.spectator.allowSpectator),true);
                 if (!getSpectatorUserNames().isEmpty())
                     embed.addField("Online Spectators", String.join(", ", getSpectatorUserNames()), true);
                 embed

@@ -22,7 +22,7 @@ public final class Config {
     public final InGameCommands inGameCommands = new InGameCommands();
     public final Theme theme = new Theme();
     public final Discord discord = new Discord();
-    public final Database database = new Database();
+//    public final Database database = new Database();
     public final AutoUpdater autoUpdater = new AutoUpdater();
 
     public static final class Authentication {
@@ -63,7 +63,7 @@ public final class Config {
         public final ConnectionProxy connectionProxy = new ConnectionProxy();
         public int compressionLevel = -1;
         public boolean autoConnect = false; // auto-connect proxy on process start
-        public final ClientViaVersion viaversion = new ClientViaVersion();
+//        public final ClientViaVersion viaversion = new ClientViaVersion();
         public String bindAddress = "0.0.0.0";
         public boolean maxPlaytimeReconnect = false;
         public long maxPlaytimeReconnectMins = 1440;
@@ -75,12 +75,12 @@ public final class Config {
             public boolean enabled = true;
         }
 
-        public static final class ClientViaVersion {
-            public boolean enabled = false;
-            public boolean disableOn2b2t = true;
-            public boolean autoProtocolVersion = true;
-            public int protocolVersion = 765;
-        }
+//        public static final class ClientViaVersion {
+//            public boolean enabled = false;
+//            public boolean disableOn2b2t = true;
+//            public boolean autoProtocolVersion = true;
+//            public int protocolVersion = 765;
+//        }
 
         public static final class ClientTimeout {
             public boolean enable = true;
@@ -184,13 +184,13 @@ public final class Config {
                 public String enterWhisperMessage = "Hello, I am using ZenithProxy! I have alerted my owner that you are here!";
                 public int enterWhisperCooldownSeconds = 30;
                 public boolean enterWhisperWhilePlayerConnected = false;
-                public boolean replayRecording = false;
-                public ReplayRecordingMode replayRecordingMode = ReplayRecordingMode.ENEMY;
-                public int replayRecordingCooldownMins = 5;
-                public enum ReplayRecordingMode {
-                    ENEMY,
-                    ALL
-                }
+//                public boolean replayRecording = false;
+//                public ReplayRecordingMode replayRecordingMode = ReplayRecordingMode.ENEMY;
+//                public int replayRecordingCooldownMins = 5;
+//                public enum ReplayRecordingMode {
+//                    ENEMY,
+//                    ALL
+//                }
             }
 
             public static class AutoArmor {
@@ -478,7 +478,7 @@ public final class Config {
         public boolean dynamicQueueEtaEquation = true;
         public boolean healthCheck = true;
         public long playerListsRefreshIntervalMins = 1440L; // one day as default
-        public final Spectator spectator = new Spectator();
+//        public final Spectator spectator = new Spectator();
         public final LoginRateLimiter loginRateLimiter = new LoginRateLimiter();
         public boolean connectionTestOnStart = true;
         public final PacketRateLimiter packetRateLimiter = new PacketRateLimiter();
@@ -495,17 +495,17 @@ public final class Config {
             public int rateLimitSeconds = 2;
         }
 
-        public static final class Spectator {
-            public boolean allowSpectator = true;
-            public String spectatorEntity = "cat";
-            public boolean spectatorPublicChatEnabled = true;
-            public boolean fullCommandsEnabled = false;
-            public boolean fullCommandsAcceptSlashCommands = true;
-            public boolean fullCommandsRequireRegularWhitelist = true;
-            public boolean playerCamOnJoin = false;
-            public boolean whitelistEnabled = true;
-            public ArrayList<PlayerEntry> whitelist = new ArrayList<>();
-        }
+//        public static final class Spectator {
+//            public boolean allowSpectator = true;
+//            public String spectatorEntity = "cat";
+//            public boolean spectatorPublicChatEnabled = true;
+//            public boolean fullCommandsEnabled = false;
+//            public boolean fullCommandsAcceptSlashCommands = true;
+//            public boolean fullCommandsRequireRegularWhitelist = true;
+//            public boolean playerCamOnJoin = false;
+//            public boolean whitelistEnabled = true;
+//            public ArrayList<PlayerEntry> whitelist = new ArrayList<>();
+//        }
 
         public static final class Bind {
             public String address = "0.0.0.0";
@@ -556,7 +556,7 @@ public final class Config {
             public boolean onlinePlayerCount = true;
             public boolean favicon = true;
             public int maxPlayers = Integer.MAX_VALUE;
-            public boolean lanBroadcast = true;
+//            public boolean lanBroadcast = true;
             public boolean responseCaching = true;
             // could probably be increased 2-3x without issue
             public int responseCacheSeconds = 10;
@@ -660,32 +660,32 @@ public final class Config {
         }
     }
 
-    public static final class Database {
-        public boolean enabled = false;
-        public String host = "";
-        public int port = 5432;
-        public String username = "";
-        public String password = "";
-        public boolean queueWaitEnabled = true;
-        public boolean connectionsEnabled = true;
-        public boolean chatsEnabled = true;
-        public boolean deathsEnabled = true;
-        public boolean unknownDeathDiscordMsg = true;
-        public boolean queueLengthEnabled = true;
-        public boolean restartsEnabled = true;
-        public boolean playerCountEnabled = true;
-        public boolean tablistEnabled = true;
-        public boolean playtimeEnabled = true;
-        public boolean timeEnabled = true;
-        public final Lock lock = new Lock();
-
-        public static final class Lock {
-            // use "rediss://" for SSL connection
-            public String redisAddress = "redis://localhost:7181";
-            public String redisUsername = "";
-            public String redisPassword = "";
-        }
-    }
+//    public static final class Database {
+//        public boolean enabled = false;
+//        public String host = "";
+//        public int port = 5432;
+//        public String username = "";
+//        public String password = "";
+//        public boolean queueWaitEnabled = true;
+//        public boolean connectionsEnabled = true;
+//        public boolean chatsEnabled = true;
+//        public boolean deathsEnabled = true;
+//        public boolean unknownDeathDiscordMsg = true;
+//        public boolean queueLengthEnabled = true;
+//        public boolean restartsEnabled = true;
+//        public boolean playerCountEnabled = true;
+//        public boolean tablistEnabled = true;
+//        public boolean playtimeEnabled = true;
+//        public boolean timeEnabled = true;
+//        public final Lock lock = new Lock();
+//
+//        public static final class Lock {
+//            // use "rediss://" for SSL connection
+//            public String redisAddress = "redis://localhost:7181";
+//            public String redisUsername = "";
+//            public String redisPassword = "";
+//        }
+//    }
 
     public static final class AutoUpdater {
         public int autoUpdateCheckIntervalSeconds = 300;

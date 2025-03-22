@@ -1,10 +1,12 @@
 package com.zenith.mc.block;
 
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.DoubleNode;
+import com.fasterxml.jackson.databind.node.FloatNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zenith.util.Maps;
 import com.zenith.util.math.MathHelper;
@@ -51,19 +53,20 @@ public class BlockDataManager {
         }
         initShapeCache("blockCollisionShapes", blockStateIdToCollisionBoxes);
         initShapeCache("blockInteractionShapes", blockStateIdToInteractionBoxes);
-        try (JsonParser fluidsParse = OBJECT_MAPPER.createParser(getClass().getResourceAsStream(
-            "/mcdata/fluidStates.json"))) {
-            TreeNode treeNode = fluidsParse.getCodec().readTree(fluidsParse);
-            ObjectNode fluidStatesNode = (ObjectNode) treeNode;
-            for (Iterator<String> it = fluidStatesNode.fieldNames(); it.hasNext(); ) {
-                String stateIdString = it.next();
-                int stateId = Integer.parseInt(stateIdString);
-                ObjectNode fluidStateNode = (ObjectNode) fluidStatesNode.get(stateIdString);
-                boolean water = fluidStateNode.get("water").asBoolean();
-                boolean source = fluidStateNode.get("source").asBoolean();
-                int amount = fluidStateNode.get("amount").asInt();
-                boolean falling = fluidStateNode.get("falling").asBoolean();
-                blockStateIdToFluidState.put(stateId, new FluidState(water, source, amount, falling));
+        try (JsonParser parser = OBJECT_MAPPER.getFactory().createParser(getClass().getResourceAsStream("/mcdata/fluidStates.json"))) {
+            while (parser.nextToken() != null) {
+                if (parser.currentToken() == JsonToken.FIELD_NAME) {
+                    String stateIdString = parser.getCurrentName();
+                    parser.nextToken(); // move to object start
+                    ObjectNode fluidStateNode = OBJECT_MAPPER.readValue(parser, ObjectNode.class);
+                    // process fluidStateNode here
+                    int stateId = Integer.parseInt(stateIdString);
+                    boolean water = fluidStateNode.get("water").asBoolean();
+                    boolean source = fluidStateNode.get("source").asBoolean();
+                    int amount = fluidStateNode.get("amount").asInt();
+                    boolean falling = fluidStateNode.get("falling").asBoolean();
+                    blockStateIdToFluidState.put(stateId, new FluidState(water, source, amount, falling));
+                }
             }
         }
         DataPalette.GLOBAL_PALETTE_BITS_PER_ENTRY = MathHelper.log2Ceil(blockStateIdToBlock.size());
@@ -71,53 +74,66 @@ public class BlockDataManager {
 
     @SneakyThrows
     private void initShapeCache(String name, Int2ObjectOpenHashMap<List<CollisionBox>> output) {
-        try (JsonParser shapesParser = OBJECT_MAPPER.createParser(getClass().getResourceAsStream(
-            "/mcdata/" + name + ".json"))) {
+        try (JsonParser shapesParser = OBJECT_MAPPER.getFactory().createParser(getClass().getResourceAsStream(
+                "/mcdata/" + name + ".json"))) {
             final Int2ObjectOpenHashMap<List<CollisionBox>> shapeIdToCollisionBoxes = new Int2ObjectOpenHashMap<>(100);
-            TreeNode node = shapesParser.getCodec().readTree(shapesParser);
-            ObjectNode shapesNode = (ObjectNode) node.get("shapes");
-            for (Iterator<String> it = shapesNode.fieldNames(); it.hasNext(); ) {
-                String shapeIdName = it.next();
-                int shapeId = Integer.parseInt(shapeIdName);
-                final List<CollisionBox> collisionBoxes = new ArrayList<>(2);
-                ArrayNode outerCbArray = (ArrayNode) shapesNode.get(shapeIdName);
-                for (Iterator<JsonNode> it2 = outerCbArray.elements(); it2.hasNext(); ) {
-                    ArrayNode innerCbArray = (ArrayNode) it2.next();
-                    double[] cbArr = new double[6];
-                    int i = 0;
-                    for (Iterator<JsonNode> it3 = innerCbArray.elements(); it3.hasNext(); ) {
-                        DoubleNode doubleNode = (DoubleNode) it3.next();
-                        cbArr[i++] = doubleNode.asDouble();
-                    }
-                    collisionBoxes.add(new CollisionBox(cbArr[0], cbArr[3], cbArr[1], cbArr[4], cbArr[2], cbArr[5]));
-                }
-                shapeIdToCollisionBoxes.put(shapeId, collisionBoxes);
-            }
 
-            ObjectNode blocksNode = (ObjectNode) node.get("blocks");
-            for (Iterator<String> it = blocksNode.fieldNames(); it.hasNext(); ) {
-                String blockName = it.next();
-                int blockId = Integer.parseInt(blockName);
-                JsonNode shapeNode = blocksNode.get(blockName);
-                final IntArrayList shapeIds = new IntArrayList(2);
-                if (shapeNode.isInt()) {
-                    int shapeId = shapeNode.asInt();
-                    shapeIds.add(shapeId);
-                } else if (shapeNode.isArray()) {
-                    ArrayNode shapeIdArray = (ArrayNode) shapeNode;
-                    for (Iterator<JsonNode> it2 = shapeIdArray.elements(); it2.hasNext(); ) {
-                        int shapeId = it2.next().asInt();
-                        shapeIds.add(shapeId);
+            // Move into the root object
+            shapesParser.nextToken(); // START_OBJECT
+            while (shapesParser.nextToken() != null) {
+                if (shapesParser.currentToken() == JsonToken.FIELD_NAME) {
+                    String fieldName = shapesParser.getCurrentName();
+                    shapesParser.nextToken(); // move to field value
+                    if ("shapes".equals(fieldName)) {
+                        // Parse shapes object
+                        while (shapesParser.nextToken() != JsonToken.END_OBJECT) {
+                            if (shapesParser.currentToken() == JsonToken.FIELD_NAME) {
+                                int shapeId = Integer.parseInt(shapesParser.getCurrentName());
+                                shapesParser.nextToken(); // move to start array
+                                List<CollisionBox> collisionBoxes = new ArrayList<>(2);
+                                while (shapesParser.nextToken() != JsonToken.END_ARRAY) {
+                                    float[] cbArr = new float[6];
+                                    int idx = 0;
+                                    // nested array of 6 floats
+                                    while (shapesParser.nextToken() != JsonToken.END_ARRAY) {
+                                        cbArr[idx++] = shapesParser.getFloatValue();
+                                    }
+                                    collisionBoxes.add(new CollisionBox(
+                                            cbArr[0], cbArr[3], cbArr[1], cbArr[4], cbArr[2], cbArr[5]
+                                    ));
+                                }
+                                shapeIdToCollisionBoxes.put(shapeId, collisionBoxes);
+                            }
+                        }
+                    } else if ("blocks".equals(fieldName)) {
+                        // Parse blocks object
+                        while (shapesParser.nextToken() != JsonToken.END_OBJECT) {
+                            if (shapesParser.currentToken() == JsonToken.FIELD_NAME) {
+                                int blockId = Integer.parseInt(shapesParser.getCurrentName());
+                                shapesParser.nextToken();
+                                IntArrayList shapeIds = new IntArrayList(2);
+                                if (shapesParser.currentToken() == JsonToken.VALUE_NUMBER_INT) {
+                                    shapeIds.add(shapesParser.getIntValue());
+                                } else if (shapesParser.currentToken() == JsonToken.START_ARRAY) {
+                                    while (shapesParser.nextToken() != JsonToken.END_ARRAY) {
+                                        shapeIds.add(shapesParser.getIntValue());
+                                    }
+                                } else {
+                                    throw new RuntimeException(
+                                            "Unexpected shape node type: " + shapesParser.currentToken()
+                            );
+                                }
+                                Block blockData = BlockRegistry.REGISTRY.get(blockId);
+                                for (int i = blockData.minStateId(); i <= blockData.maxStateId(); i++) {
+                                    int nextShapeId = shapeIds.size() == 1
+                                            ? shapeIds.getInt(0)
+                                            : shapeIds.getInt(i - blockData.minStateId());
+                                    List<CollisionBox> collisionBoxes = shapeIdToCollisionBoxes.get(nextShapeId);
+                                    output.put(i, collisionBoxes);
+                                }
+                            }
+                        }
                     }
-                } else throw new RuntimeException("Unexpected shape node type: " + shapeNode.getNodeType());
-
-                Block blockData = BlockRegistry.REGISTRY.get(blockId);
-                for (int i = blockData.minStateId(); i <= blockData.maxStateId(); i++) {
-                    int nextShapeId = shapeIds.getInt(0);
-                    if (shapeIds.size() > 1)
-                        nextShapeId = shapeIds.getInt(i - blockData.minStateId());
-                    List<CollisionBox> collisionBoxes = shapeIdToCollisionBoxes.get(nextShapeId);
-                    output.put(i, collisionBoxes);
                 }
             }
         }

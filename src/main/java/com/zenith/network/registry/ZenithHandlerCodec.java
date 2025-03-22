@@ -21,12 +21,12 @@ import com.zenith.network.server.handler.shared.outgoing.KeepAliveOutgoingHandle
 import com.zenith.network.server.handler.shared.outgoing.SGameProfileOutgoingHandler;
 import com.zenith.network.server.handler.shared.outgoing.ServerTablistDataOutgoingHandler;
 import com.zenith.network.server.handler.shared.postoutgoing.*;
-import com.zenith.network.server.handler.spectator.incoming.*;
-import com.zenith.network.server.handler.spectator.incoming.movement.PlayerPositionRotationSpectatorHandler;
-import com.zenith.network.server.handler.spectator.incoming.movement.PlayerPositionSpectatorHandler;
-import com.zenith.network.server.handler.spectator.incoming.movement.PlayerRotationSpectatorHandler;
-import com.zenith.network.server.handler.spectator.outgoing.*;
-import com.zenith.network.server.handler.spectator.postoutgoing.LoginSpectatorPostHandler;
+//import com.zenith.network.server.handler.spectator.incoming.*;
+//import com.zenith.network.server.handler.spectator.incoming.movement.PlayerPositionRotationSpectatorHandler;
+//import com.zenith.network.server.handler.spectator.incoming.movement.PlayerPositionSpectatorHandler;
+//import com.zenith.network.server.handler.spectator.incoming.movement.PlayerRotationSpectatorHandler;
+//import com.zenith.network.server.handler.spectator.outgoing.*;
+//import com.zenith.network.server.handler.spectator.postoutgoing.LoginSpectatorPostHandler;
 import org.geysermc.mcprotocollib.protocol.data.ProtocolState;
 import org.geysermc.mcprotocollib.protocol.packet.common.clientbound.*;
 import org.geysermc.mcprotocollib.protocol.packet.common.serverbound.ServerboundClientInformationPacket;
@@ -231,43 +231,43 @@ public final class ZenithHandlerCodec {
                 .build())
             .build();
 
-        final PacketHandlerCodec SERVER_SPECTATOR_CODEC = PacketHandlerCodec.serverBuilder()
-            .setId("server-spectator")
-            .setPriority(1)
-            .setActivePredicate(ServerSession::isSpectator)
-            .state(ProtocolState.GAME, PacketHandlerStateCodec.serverBuilder()
-                .allowUnhandledInbound(false)
-                .registerInbound(ServerboundMovePlayerPosRotPacket.class, new PlayerPositionRotationSpectatorHandler())
-                .registerInbound(ServerboundMovePlayerPosPacket.class, new PlayerPositionSpectatorHandler())
-                .registerInbound(ServerboundMovePlayerRotPacket.class, new PlayerRotationSpectatorHandler())
-                .registerInbound(ServerboundChatPacket.class, new ServerChatSpectatorHandler())
-                .registerInbound(ServerboundPlayerCommandPacket.class, new PlayerCommandSpectatorHandler())
-                .registerInbound(ServerboundTeleportToEntityPacket.class, new TeleportToEntitySpectatorHandler())
-                .registerInbound(ServerboundInteractPacket.class, new InteractEntitySpectatorHandler())
-                .registerInbound(ServerboundChatCommandPacket.class, new ChatCommandSpectatorHandler())
-                .registerInbound(ServerboundChatCommandSignedPacket.class, new SignedChatCommandSpectatorHandler())
-                .registerOutbound(ClientboundCommandsPacket.class, new ClientCommandsSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundContainerClosePacket.class, new ContainerCloseSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundContainerSetContentPacket.class, new ContainerSetContentSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundPlaceGhostRecipePacket.class, new PlaceGhostRecipeSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundOpenScreenPacket.class, new OpenScreenSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundOpenSignEditorPacket.class, new OpenSignEditorSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundSetCarriedItemPacket.class, new SetCarriedItemSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundSetHealthPacket.class, new SetHealthSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundPlayerPositionPacket.class, new PlayerPositionSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundSetExperiencePacket.class, new SetExperienceSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundOpenBookPacket.class, new OpenBookSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundContainerSetSlotPacket.class, new ContainerSetSlotSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundGameEventPacket.class, new GameEventSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundMoveVehiclePacket.class, new MoveVehicleSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundHorseScreenOpenPacket.class, new HorseScreenOpenSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundContainerSetDataPacket.class, new ContainerSetDataSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundPlayerAbilitiesPacket.class, new PlayerAbilitiesSpectatorOutgoingHandler())
-                .registerOutbound(ClientboundRespawnPacket.class, new RespawnSpectatorOutgoingPacket())
-                .registerOutbound(ClientboundStartConfigurationPacket.class, new StartConfigurationSpectatorOutgoingHandler())
-                .registerPostOutbound(ClientboundLoginPacket.class, new LoginSpectatorPostHandler())
-                .build())
-            .build();
+//        final PacketHandlerCodec SERVER_SPECTATOR_CODEC = PacketHandlerCodec.serverBuilder()
+//            .setId("server-spectator")
+//            .setPriority(1)
+//            .setActivePredicate(ServerSession::isSpectator)
+//            .state(ProtocolState.GAME, PacketHandlerStateCodec.serverBuilder()
+//                .allowUnhandledInbound(false)
+//                .registerInbound(ServerboundMovePlayerPosRotPacket.class, new PlayerPositionRotationSpectatorHandler())
+//                .registerInbound(ServerboundMovePlayerPosPacket.class, new PlayerPositionSpectatorHandler())
+//                .registerInbound(ServerboundMovePlayerRotPacket.class, new PlayerRotationSpectatorHandler())
+//                .registerInbound(ServerboundChatPacket.class, new ServerChatSpectatorHandler())
+//                .registerInbound(ServerboundPlayerCommandPacket.class, new PlayerCommandSpectatorHandler())
+//                .registerInbound(ServerboundTeleportToEntityPacket.class, new TeleportToEntitySpectatorHandler())
+//                .registerInbound(ServerboundInteractPacket.class, new InteractEntitySpectatorHandler())
+//                .registerInbound(ServerboundChatCommandPacket.class, new ChatCommandSpectatorHandler())
+//                .registerInbound(ServerboundChatCommandSignedPacket.class, new SignedChatCommandSpectatorHandler())
+//                .registerOutbound(ClientboundCommandsPacket.class, new ClientCommandsSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundContainerClosePacket.class, new ContainerCloseSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundContainerSetContentPacket.class, new ContainerSetContentSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundPlaceGhostRecipePacket.class, new PlaceGhostRecipeSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundOpenScreenPacket.class, new OpenScreenSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundOpenSignEditorPacket.class, new OpenSignEditorSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundSetCarriedItemPacket.class, new SetCarriedItemSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundSetHealthPacket.class, new SetHealthSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundPlayerPositionPacket.class, new PlayerPositionSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundSetExperiencePacket.class, new SetExperienceSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundOpenBookPacket.class, new OpenBookSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundContainerSetSlotPacket.class, new ContainerSetSlotSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundGameEventPacket.class, new GameEventSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundMoveVehiclePacket.class, new MoveVehicleSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundHorseScreenOpenPacket.class, new HorseScreenOpenSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundContainerSetDataPacket.class, new ContainerSetDataSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundPlayerAbilitiesPacket.class, new PlayerAbilitiesSpectatorOutgoingHandler())
+//                .registerOutbound(ClientboundRespawnPacket.class, new RespawnSpectatorOutgoingPacket())
+//                .registerOutbound(ClientboundStartConfigurationPacket.class, new StartConfigurationSpectatorOutgoingHandler())
+//                .registerPostOutbound(ClientboundLoginPacket.class, new LoginSpectatorPostHandler())
+//                .build())
+//            .build();
 
         final PacketHandlerCodec SERVER_SHARED_CODEC = PacketHandlerCodec.serverBuilder()
             .setId("server-shared")
@@ -321,7 +321,7 @@ public final class ZenithHandlerCodec {
         CLIENT_REGISTRY.register(CLIENT_CODEC);
         CLIENT_REGISTRY.register(CLIENT_PACKETLOG);
         SERVER_REGISTRY.register(SERVER_PLAYER_CODEC);
-        SERVER_REGISTRY.register(SERVER_SPECTATOR_CODEC);
+//        SERVER_REGISTRY.register(SERVER_SPECTATOR_CODEC);
         SERVER_REGISTRY.register(SERVER_SHARED_CODEC);
         SERVER_REGISTRY.register(SERVER_PACKETLOG);
     }

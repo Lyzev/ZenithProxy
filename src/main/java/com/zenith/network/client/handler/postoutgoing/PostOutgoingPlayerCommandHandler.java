@@ -1,6 +1,6 @@
 package com.zenith.network.client.handler.postoutgoing;
 
-import com.zenith.feature.spectator.SpectatorSync;
+//import com.zenith.feature.spectator.SpectatorSync;
 import com.zenith.network.client.ClientSession;
 import com.zenith.network.registry.ClientEventLoopPacketHandler;
 import org.geysermc.mcprotocollib.protocol.packet.ingame.serverbound.player.ServerboundPlayerCommandPacket;
@@ -14,11 +14,11 @@ public class PostOutgoingPlayerCommandHandler implements ClientEventLoopPacketHa
         switch (packet.getState()) {
             case START_SNEAKING -> {
                 CACHE.getPlayerCache().setSneaking(true);
-                SpectatorSync.sendPlayerSneakStatus();
+//                SpectatorSync.sendPlayerSneakStatus();
             }
             case STOP_SNEAKING -> {
                 CACHE.getPlayerCache().setSneaking(false);
-                SpectatorSync.sendPlayerSneakStatus();
+//                SpectatorSync.sendPlayerSneakStatus();
             }
             case START_SPRINTING -> CACHE.getPlayerCache().setSprinting(true);
             case STOP_SPRINTING -> CACHE.getPlayerCache().setSprinting(false);

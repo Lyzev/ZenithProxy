@@ -1,6 +1,6 @@
 package com.zenith.network.client.handler.postoutgoing;
 
-import com.zenith.feature.spectator.SpectatorSync;
+//import com.zenith.feature.spectator.SpectatorSync;
 import com.zenith.network.client.ClientSession;
 import com.zenith.network.registry.ClientEventLoopPacketHandler;
 import org.geysermc.mcprotocollib.protocol.packet.ingame.serverbound.player.ServerboundMovePlayerPosRotPacket;
@@ -16,7 +16,7 @@ public class PostOutgoingPlayerPositionRotationHandler implements ClientEventLoo
                 .setZ(packet.getZ())
                 .setYaw(packet.getYaw())
                 .setPitch(packet.getPitch());
-        SpectatorSync.syncPlayerPositionWithSpectators();
+//        SpectatorSync.syncPlayerPositionWithSpectators();
         return true;
     }
 }

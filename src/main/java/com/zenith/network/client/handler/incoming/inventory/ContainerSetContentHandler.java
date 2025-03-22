@@ -6,7 +6,7 @@ import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.inventory.C
 import org.jspecify.annotations.NonNull;
 
 import static com.zenith.Shared.CACHE;
-import static com.zenith.feature.spectator.SpectatorSync.syncPlayerEquipmentWithSpectatorsFromCache;
+//import static com.zenith.feature.spectator.SpectatorSync.syncPlayerEquipmentWithSpectatorsFromCache;
 
 
 public class ContainerSetContentHandler implements ClientEventLoopPacketHandler<ClientboundContainerSetContentPacket, ClientSession> {
@@ -15,7 +15,7 @@ public class ContainerSetContentHandler implements ClientEventLoopPacketHandler<
         CACHE.getPlayerCache().setInventory(packet.getContainerId(), packet.getItems());
         CACHE.getPlayerCache().getInventoryCache().setMouseStack(packet.getCarriedItem());
         CACHE.getPlayerCache().getActionId().set(packet.getStateId());
-        syncPlayerEquipmentWithSpectatorsFromCache();
+//        syncPlayerEquipmentWithSpectatorsFromCache();
         return true;
     }
 }
