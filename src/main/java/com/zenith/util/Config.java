@@ -493,6 +493,7 @@ public final class Config {
         public static final class LoginRateLimiter {
             public boolean enabled = true;
             public int rateLimitSeconds = 2;
+            public LoginRateLimiter() {}
         }
 
 //        public static final class Spectator {
@@ -693,3 +694,4 @@ public final class Config {
         public boolean shouldReconnectAfterAutoUpdate = false;
     }
 }
+
