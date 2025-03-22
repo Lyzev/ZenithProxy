@@ -479,7 +479,7 @@ public final class Config {
         public boolean healthCheck = true;
         public long playerListsRefreshIntervalMins = 1440L; // one day as default
 //        public final Spectator spectator = new Spectator();
-        public final LoginRateLimiter loginRateLimiter = new LoginRateLimiter();
+//        public final LoginRateLimiter loginRateLimiter = new LoginRateLimiter();
         public boolean connectionTestOnStart = true;
         public final PacketRateLimiter packetRateLimiter = new PacketRateLimiter();
 
@@ -490,12 +490,12 @@ public final class Config {
             public boolean logRate = false;
         }
 
-        public static final class LoginRateLimiter {
-            public boolean enabled = true;
-            public int rateLimitSeconds = 2;
-            public LoginRateLimiter() {}
-        }
-
+//        public static final class LoginRateLimiter {
+//            public boolean enabled = true;
+//            public int rateLimitSeconds = 2;
+//            public LoginRateLimiter() {}
+//        }
+//
 //        public static final class Spectator {
 //            public boolean allowSpectator = true;
 //            public String spectatorEntity = "cat";

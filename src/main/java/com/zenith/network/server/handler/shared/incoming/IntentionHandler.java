@@ -72,7 +72,9 @@ public class IntentionHandler implements PacketHandler<ClientIntentionPacket, Se
 
     private boolean handleLogin(final ClientIntentionPacket packet, final ServerSession session, final MinecraftProtocol protocol) {
         protocol.setOutboundState(ProtocolState.LOGIN);
-        if (CONFIG.server.loginRateLimiter.enabled && ServerSession.LOGIN_RATE_LIMITER.isRateLimited(session)) {
+        if (
+//                CONFIG.server.loginRateLimiter.enabled &&
+                ServerSession.LOGIN_RATE_LIMITER.isRateLimited(session)) {
             SERVER_LOG.info("Disconnecting {} due to rate limiting.", session.getRemoteAddress());
             session.disconnect("Login Rate Limited.");
             return true;

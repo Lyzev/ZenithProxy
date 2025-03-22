@@ -16,7 +16,7 @@ public class LoginRateLimiter {
     private final Cache<InetAddress, Long> cache;
 
     public LoginRateLimiter() {
-        this(CONFIG.server.loginRateLimiter.rateLimitSeconds);
+        this(2);
     }
 
     public LoginRateLimiter(final int rateLimitSeconds) {
