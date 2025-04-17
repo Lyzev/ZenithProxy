@@ -75,7 +75,7 @@ jobs:
           cp build/native/nativeCompile/* docker-graalvm/build/native/nativeCompile/
 
       - name: Build image
-        run: "docker build . --tag ghcr.io/lyzev/zenith-proxy:latest"
+        run: "docker build docker-graalvm --tag ghcr.io/lyzev/zenith-proxy:latest"
 
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
