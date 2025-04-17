@@ -6,6 +6,9 @@ on:
 jobs:
   build-java-and-linux-amd64:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -66,3 +69,16 @@ jobs:
         with:
           name: ZenithProxy-linux
           path: ZenithProxy.zip
+
+      - name: Copy Linux Artifact
+        run: |
+          cp build/native/nativeCompile/* docker-graalvm/build/native/nativeCompile/
+
+      - name: Build image
+        run: "docker build . --tag ghcr.io/lyzev/zenith-proxy:latest"
+
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push image
+        run: "docker push --all-tags ghcr.io/lyzev/zenith-proxy"
